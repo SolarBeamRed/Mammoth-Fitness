@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mammoth Fitness - Unleash Your Potential</title>
+    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
+                <h1 class="logo">Mammoth<span>Fitness</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#dashboard"><i class="fas fa-home"></i>Dashboard</a></li>
+                    <li class="nav-item"><a href="#workouts"><i class="fas fa-dumbbell"></i>Workouts</a></li>
+                    <li class="nav-item"><a href="#nutrition"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
+                    <li class="nav-item"><a href="#progress"><i class="fas fa-chart-line"></i>Progress</a></li>
+                    <li class="nav-item"><a href="#community"><i class="fas fa-users"></i>Community</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-panel">
+                <div class="user-greeting">
+                    <span class="welcome">Welcome,</span>
+                    <span class="username">@Strongman123</span>
+                </div>
+                <div class="user-menu">
+                    <button class="avatar">
+                        <img src="images/user-img.svg" alt="User Avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="#profile"><i class="fas fa-user-cog"></i>Profile Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <!-- Hero Section -->
+        <section class="hero-banner">
+            <div class="hero-content">
+                <h2 class="hero-title">Transform Your Body, Elevate Your Life</h2>
+                <p class="hero-subtitle">Track your workouts, monitor nutrition, and crush your fitness goals</p>
+                <div class="cta-container">
+                    <button class="cta-primary"><i class="fas fa-plus"></i>Start New Workout</button>
+                    <button class="cta-secondary"><i class="fas fa-utensils"></i>Log Meal</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-grid">
+            <!-- Today's Workout Card -->
+            <article class="card workout-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-fire"></i>Today's Workout Plan</h3>
+                    <span class="status-badge active">In Progress</span>
+                </div>
+                <div class="card-content">
+                    <div class="workout-progress">
+                        <div class="progress-circle" data-progress="65">
+                            <span>65%</span>
+                        </div>
+                        <div class="workout-details">
+                            <p class="focus-area">Full Body Strength</p>
+                            <p class="duration">Estimated 45 mins remaining</p>
+                        </div>
+                    </div>
+                    <button class="btn-continue"><i class="fas fa-play"></i>Resume Session</button>
+                </div>
+            </article>
+
+            <!-- Nutrition Overview -->
+            <article class="card nutrition-card">
+                <div class="card-header">
+                    <h3><i class="fas fa-carrot"></i>Nutrition Today</h3>
+                    <div class="calorie-count">
+                        <span class="consumed">1,840</span>/<span class="target">2,400</span> kcal
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class="macronutrient-chart">
+                        <div class="macro protein">
+                            <span class="label">Protein</span>
+                            <span class="value">128g</span>
+                        </div>
+                        <div class="macro carbs">
+                            <span class="label">Carbs</span>
+                            <span class="value">210g</span>
+                        </div>
+                        <div class="macro fats">
+                            <span class="label">Fats</span>
+                            <span class="value">62g</span>
+                        </div>
+                    </div>
+                    <div class="meal-log">
+                        <button class="btn-log-meal"><i class="fas fa-plus-circle"></i>Add Meal</button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Quick Actions -->
+            <article class="card quick-actions">
+                <div class="card-header">
+                    <h3><i class="fas fa-bolt"></i>Quick Actions</h3>
+                </div>
+                <div class="card-content">
+                    <div class="action-grid">
+                        <a href="#body-measurements" class="action-item">
+                            <i class="fas fa-ruler-combined"></i>
+                            <span>Body Measurements</span>
+                        </a>
+                        <a href="#progress-photos" class="action-item">
+                            <i class="fas fa-camera"></i>
+                            <span>Progress Photos</span>
+                        </a>
+                        <a href="#water-intake" class="action-item">
+                            <i class="fas fa-tint"></i>
+                            <span>Water Tracker</span>
+                        </a>
+                        <a href="#coaching" class="action-item">
+                            <i class="fas fa-comments"></i>
+                            <span>Coaching</span>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="images/logo-icon.svg" alt="Mammoth Icon" class="footer-icon">
+                <p class="tagline">Strength • Discipline • Progress</p>
+            </div>
+            <nav class="footer-nav">
+                <div class="nav-column">
+                    <h4>Training</h4>
+                    <a href="#programs">Programs</a>
+                    <a href="#exercises">Exercise Library</a>
+                    <a href="#coaching">1-on-1 Coaching</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Nutrition</h4>
+                    <a href="#meal-plans">Meal Plans</a>
+                    <a href="#recipes">Recipes</a>
+                    <a href="#supplements">Supplements</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Community</h4>
+                    <a href="#forums">Forums</a>
+                    <a href="#challenges">Challenges</a>
+                    <a href="#events">Local Events</a>
+                </div>
+            </nav>
+        </div>
+        <div class="copyright">
+            © 2023 Mammoth Fitness. All rights reserved.
+        </div>
+    </footer>
+    <script src="js/homepage.js"></script>
+</body>
+</html>

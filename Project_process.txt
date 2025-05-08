@@ -1,0 +1,103 @@
+Basic explanations:
+
+Middleware: Used to make requests or responses have formats that are suitable 	for future use. Ex: When form is submitted through HTTP, it is 	submitted in an encoded form, which is not readable by default by 	Node. So you use a middleware function to just convert it to JSON 	object instead.
+
+req and res: These are both objects stored on the SERVER side. Whenever server 	receives requests, it uses req to refer to the incoming requests and 	it's properties, like, if the sent request has a session id, that is 	checked through req.session.
+	res is used to refer to anything that is being sent as the response to 	the client, like, if request is valid and gets a valid response, then 	res.status(200), else can say res.status(500) or res.status(401) etc
+
+
+````````````````````````````````````````````````````````````````````````````
+
+Flow:
+
+Frontend for user input
+Backend for this input to be read
+Database for this backend server to get content from based on user input
+
+````````````````````````````````````````````````````````````````````````````
+
+
+
+Directory structure and initial installed services:
+
+Mammoth
+	> public/ {all static sites such as HTML, CSS, client JS, images}
+	> src/
+		> routes/ {Express route handlers}
+		> controllers/ {Logic for handling requests}
+		> models/ {DB Query handling}
+		> app.js {Server setup}
+	> .env {Keeps all secrets such as DB credentials}
+	> package.json {Created by node when npm init is ran}
+
+Install node js. This will also provide it's package installer called npm
+
+
+dir# npm install express mysql2 express-session bcrypt dotenv
+
+express: web server frame
+mysql2: for communication with MySQL
+express-session: handles cookies
+bcrypt: password hashing
+dotenv: handling .env content
+
+
+
+
+````````````````````````````````````````````````````````````````````````````
+
+
+
+
+User signup and login procedure:
+
+Entering code onto app.js to start the server. In the file:
+Middleware is set up
+MySQL database is connected with app.js (backend)
+Routes are added
+
+
+================	CREATING DATABASE	================
+
+To access MySQL Command Line Client:
+Open cmd, change directory to where MySQL server is installed, so that MySQL commands can be understood and executed my server:
+cmd# cd C:\Program Files\MySQL\MySQL Server 9.3\bin
+
+From here, queries can be run as usual
+
+================      END CREATING DATABASE	================
+
+Whole flow, pretty simple actually:
+
+1. HTML has submit button which submits a form
+2. Frontend JS receives this form data, converts to JSON object, sends it to backend (app.js), and awaits result from backend
+3. Backend takes this form data, sends Query to insert into database, and checks if Duplicate entry is being sent. In that case, sends "Email already Exists", otherwise sends "Sign up successful"
+
+IN the whole script.js file, I am handling what is happening when submit button is clicked. I am saying that the submit event is asynchronous, and when it is clicked, the form data sent through the form is stored as a FormData object. I then convert it to simple js object using formdata.entries(). I then make a request to the backend using fetch to tell it to send an object with keys such as method, headers, and body will contain form data. I will await the result till server responds
+
+auth.js handles creating routes. When frontend's JS sends fetch function with some URL and sends it to backend, auth.js receives this request, builds route by saying get/post etc, and sends it to authController for logic
+
+authController handles the logic, meaning when it receives HTTP request from auth.js, it connects to the database with given .env credentials, and sends Queries to the database. It then gives back the res (server's response object) to frontend JS, which is displayed to the user. This res object's text can be something like "Sign up successful" or "Email already exists"
+
+
+
+
+
+```````````````````````````````````````````````````````````````````````
+
+
+
+
+Homepage:
+
+On successful login by user in login.html page, we add logic to create session for that user in authController loginUser function. So on successful login, we fetch user data from database and add that data as an object as a session in the backend. Express automatically generates and sends a cookie associated with this session, and when user sends request again, if that request contains this cookie, this session details are fetched from backend and provided
+
+Flow: 
+
+* Default page on opening is homepage. If cookie is not found with
+  sent request, client is automatically kicked to login page
+* User logs in successfully -> cookie is created by backend and sent to client
+* User connects to URL -> homepage.js sends request to backend with
+  '/api/user' -> auth.js receives request and forwards to authController.js
+  cookie is checked, and respective session user details are given back as
+  response -> homepage.js uses this to load whatever is needed
