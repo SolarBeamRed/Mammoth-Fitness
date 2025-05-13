@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workouts - Mammoth Fitness</title>
+    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/workouts.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar - Same as homepage -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
+                <h1 class="logo">Mammoth<span>Fitness</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="homepage.html"><i class="fas fa-home"></i>Dashboard</a></li>
+                    <li class="nav-item"><a href="workouts.html" class="active"><i class="fas fa-dumbbell"></i>Workouts</a></li>
+                    <li class="nav-item"><a href="nutrition.html"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
+                    <li class="nav-item"><a href="progress.html"><i class="fas fa-chart-line"></i>Progress</a></li>
+                    <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i>Community</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-panel">
+                <div class="user-greeting">
+                    <span class="welcome">Welcome,</span>
+                    <span class="username">@Strongman123</span>
+                </div>
+                <div class="user-menu">
+                    <button class="avatar">
+                        <img src="images/user-img.svg" alt="User Avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user-cog"></i>Profile Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <section class="workouts-header">
+            <div class="container">
+                <h1>Your Workouts</h1>
+                <button class="create-workout-btn"><i class="fas fa-plus"></i>Create New Workout</button>
+            </div>
+        </section>
+
+        <section class="workouts-grid container">
+            <!-- Workout Templates -->
+            <div class="workout-section">
+                <h2>Workout Templates</h2>
+                <div class="templates-grid">
+                    <div class="workout-card">
+                        <div class="workout-header">
+                            <h3>Full Body Strength</h3>
+                            <span class="duration"><i class="far fa-clock"></i>60 min</span>
+                        </div>
+                        <div class="workout-meta">
+                            <span class="difficulty">Intermediate</span>
+                            <span class="equipment">Gym Required</span>
+                        </div>
+                        <p class="workout-description">Complete full body workout targeting all major muscle groups.</p>
+                        <button class="start-workout-btn">Start Workout</button>
+                    </div>
+
+                    <div class="workout-card">
+                        <div class="workout-header">
+                            <h3>HIIT Cardio Blast</h3>
+                            <span class="duration"><i class="far fa-clock"></i>30 min</span>
+                        </div>
+                        <div class="workout-meta">
+                            <span class="difficulty">Advanced</span>
+                            <span class="equipment">Minimal Equipment</span>
+                        </div>
+                        <p class="workout-description">High-intensity interval training to maximize calorie burn.</p>
+                        <button class="start-workout-btn">Start Workout</button>
+                    </div>
+
+                    <div class="workout-card">
+                        <div class="workout-header">
+                            <h3>Core & Abs</h3>
+                            <span class="duration"><i class="far fa-clock"></i>20 min</span>
+                        </div>
+                        <div class="workout-meta">
+                            <span class="difficulty">Beginner</span>
+                            <span class="equipment">No Equipment</span>
+                        </div>
+                        <p class="workout-description">Strengthen your core with this targeted ab workout.</p>
+                        <button class="start-workout-btn">Start Workout</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Workouts -->
+            <div class="workout-section">
+                <h2>Recent Workouts</h2>
+                <div class="recent-workouts">
+                    <div class="workout-history-card">
+                        <div class="workout-date">
+                            <span class="day">12</span>
+                            <span class="month">May</span>
+                        </div>
+                        <div class="workout-info">
+                            <h4>Full Body Strength</h4>
+                            <div class="stats">
+                                <span><i class="fas fa-fire"></i>450 cal</span>
+                                <span><i class="fas fa-clock"></i>58 min</span>
+                                <span><i class="fas fa-dumbbell"></i>12 exercises</span>
+                            </div>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                    </div>
+
+                    <div class="workout-history-card">
+                        <div class="workout-date">
+                            <span class="day">10</span>
+                            <span class="month">May</span>
+                        </div>
+                        <div class="workout-info">
+                            <h4>HIIT Cardio Blast</h4>
+                            <div class="stats">
+                                <span><i class="fas fa-fire"></i>380 cal</span>
+                                <span><i class="fas fa-clock"></i>32 min</span>
+                                <span><i class="fas fa-dumbbell"></i>8 exercises</span>
+                            </div>
+                        </div>
+                        <button class="view-details-btn">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="logo">Mammoth<span>Fitness</span></h3>
+                <p class="tagline">Your Journey to Greatness Starts Here</p>
+            </div>
+            <nav class="footer-nav">
+                <div class="nav-column">
+                    <h4>Features</h4>
+                    <a href="#workouts">Workouts</a>
+                    <a href="#nutrition">Nutrition</a>
+                    <a href="#progress">Progress Tracking</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Community</h4>
+                    <a href="#forum">Forum</a>
+                    <a href="#challenges">Challenges</a>
+                    <a href="#events">Events</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#feedback">Feedback</a>
+                </div>
+            </nav>
+        </div>
+        <p class="copyright">&copy; 2025 MammothFitness. All rights reserved.</p>
+    </footer>
+
+    <script src="js/workouts.js"></script>
+</body>
+</html>

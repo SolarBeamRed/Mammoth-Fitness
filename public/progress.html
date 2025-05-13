@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracking - Mammoth Fitness</title>
+    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/progress.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar - Same as homepage -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
+                <h1 class="logo">Mammoth<span>Fitness</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="homepage.html"><i class="fas fa-home"></i>Dashboard</a></li>
+                    <li class="nav-item"><a href="workouts.html"><i class="fas fa-dumbbell"></i>Workouts</a></li>
+                    <li class="nav-item"><a href="nutrition.html"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
+                    <li class="nav-item"><a href="progress.html" class="active"><i class="fas fa-chart-line"></i>Progress</a></li>
+                    <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i>Community</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-panel">
+                <div class="user-greeting">
+                    <span class="welcome">Welcome,</span>
+                    <span class="username">@Strongman123</span>
+                </div>
+                <div class="user-menu">
+                    <button class="avatar">
+                        <img src="images/user-img.svg" alt="User Avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user-cog"></i>Profile Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <section class="progress-header">
+            <div class="container">
+                <div class="progress-overview">
+                    <h1>Progress Tracking</h1>
+                    <div class="timeframe-selector">
+                        <button class="active">Week</button>
+                        <button>Month</button>
+                        <button>3 Months</button>
+                        <button>Year</button>
+                    </div>
+                </div>
+                <button class="log-progress-btn"><i class="fas fa-plus"></i>Log Measurements</button>
+            </div>
+        </section>
+
+        <section class="progress-content container">
+            <!-- Weight Progress -->
+            <div class="progress-card weight-progress">
+                <div class="card-header">
+                    <h2><i class="fas fa-weight"></i>Weight Progress</h2>
+                    <div class="progress-summary">
+                        <span class="current">82.5 kg</span>
+                        <span class="change positive">-2.3 kg</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="weightChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Measurements Grid -->
+            <div class="measurements-grid">
+                <!-- Body Fat -->
+                <div class="measurement-card">
+                    <h3><i class="fas fa-percentage"></i>Body Fat</h3>
+                    <div class="measurement-value">
+                        <span class="current">18.5%</span>
+                        <span class="change negative">+0.5%</span>
+                    </div>
+                    <div class="mini-chart-container">
+                        <canvas id="bodyFatChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Muscle Mass -->
+                <div class="measurement-card">
+                    <h3><i class="fas fa-dumbbell"></i>Muscle Mass</h3>
+                    <div class="measurement-value">
+                        <span class="current">65.2 kg</span>
+                        <span class="change positive">+0.8 kg</span>
+                    </div>
+                    <div class="mini-chart-container">
+                        <canvas id="muscleMassChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Chest -->
+                <div class="measurement-card">
+                    <h3><i class="fas fa-ruler"></i>Chest</h3>
+                    <div class="measurement-value">
+                        <span class="current">102 cm</span>
+                        <span class="change positive">+1 cm</span>
+                    </div>
+                    <div class="mini-chart-container">
+                        <canvas id="chestChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Waist -->
+                <div class="measurement-card">
+                    <h3><i class="fas fa-ruler-horizontal"></i>Waist</h3>
+                    <div class="measurement-value">
+                        <span class="current">84 cm</span>
+                        <span class="change positive">-2 cm</span>
+                    </div>
+                    <div class="mini-chart-container">
+                        <canvas id="waistChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strength Progress -->
+            <div class="strength-progress">
+                <h2>Strength Progress</h2>
+                <div class="exercises-grid">
+                    <!-- Bench Press -->
+                    <div class="exercise-card">
+                        <div class="exercise-header">
+                            <h3>Bench Press</h3>
+                            <div class="progress-stats">
+                                <span class="max-weight">90 kg</span>
+                                <span class="change positive">+5 kg</span>
+                            </div>
+                        </div>
+                        <div class="progress-chart">
+                            <canvas id="benchPressChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Squat -->
+                    <div class="exercise-card">
+                        <div class="exercise-header">
+                            <h3>Squat</h3>
+                            <div class="progress-stats">
+                                <span class="max-weight">120 kg</span>
+                                <span class="change positive">+7.5 kg</span>
+                            </div>
+                        </div>
+                        <div class="progress-chart">
+                            <canvas id="squatChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Deadlift -->
+                    <div class="exercise-card">
+                        <div class="exercise-header">
+                            <h3>Deadlift</h3>
+                            <div class="progress-stats">
+                                <span class="max-weight">140 kg</span>
+                                <span class="change positive">+10 kg</span>
+                            </div>
+                        </div>
+                        <div class="progress-chart">
+                            <canvas id="deadliftChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Photos Section -->
+        <section class="progress-photos container">
+            <div class="section-header">
+                <h2>Progress Photos</h2>
+                <button class="upload-photo-btn"><i class="fas fa-camera"></i>Add New Photo</button>
+            </div>
+            <div class="photos-grid">
+                <!-- Latest Photos -->
+                <div class="photo-comparison">
+                    <div class="photo-card">
+                        <div class="photo-date">May 1, 2025</div>
+                        <div class="photo-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                    <div class="comparison-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                    <div class="photo-card current">
+                        <div class="photo-date">Today</div>
+                        <div class="photo-placeholder">
+                            <i class="fas fa-image"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer - Same as homepage -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="logo">Mammoth<span>Fitness</span></h3>
+                <p class="tagline">Your Journey to Greatness Starts Here</p>
+            </div>
+            <nav class="footer-nav">
+                <div class="nav-column">
+                    <h4>Features</h4>
+                    <a href="#workouts">Workouts</a>
+                    <a href="#nutrition">Nutrition</a>
+                    <a href="#progress">Progress Tracking</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Community</h4>
+                    <a href="#forum">Forum</a>
+                    <a href="#challenges">Challenges</a>
+                    <a href="#events">Events</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#feedback">Feedback</a>
+                </div>
+            </nav>
+        </div>
+        <p class="copyright">&copy; 2025 MammothFitness. All rights reserved.</p>
+    </footer>
+
+    <script src="js/progress.js" type="module"></script>
+</body>
+</html>

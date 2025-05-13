@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrition Tracking - Mammoth Fitness</title>
+    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/nutrition.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar - Same as homepage -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
+                <h1 class="logo">Mammoth<span>Fitness</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="homepage.html"><i class="fas fa-home"></i>Dashboard</a></li>
+                    <li class="nav-item"><a href="workouts.html"><i class="fas fa-dumbbell"></i>Workouts</a></li>
+                    <li class="nav-item"><a href="nutrition.html" class="active"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
+                    <li class="nav-item"><a href="progress.html"><i class="fas fa-chart-line"></i>Progress</a></li>
+                    <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i>Community</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-panel">
+                <div class="user-greeting">
+                    <span class="welcome">Welcome,</span>
+                    <span class="username">@Strongman123</span>
+                </div>
+                <div class="user-menu">
+                    <button class="avatar">
+                        <img src="images/user-img.svg" alt="User Avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user-cog"></i>Profile Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <section class="nutrition-header">
+            <div class="container">
+                <div class="nutrition-overview">
+                    <h1>Nutrition Tracker</h1>
+                    <div class="daily-summary">
+                        <div class="calorie-circle">
+                            <svg viewBox="0 0 36 36" class="circular-chart">
+                                <path d="M18 2.0845
+                                    a 15.9155 15.9155 0 0 1 0 31.831
+                                    a 15.9155 15.9155 0 0 1 0 -31.831"
+                                    stroke-dasharray="75, 100"
+                                />
+                            </svg>
+                            <div class="calorie-text">
+                                <span class="calories-consumed">1,840</span>
+                                <span class="total-calories">/ 2,400</span>
+                                <span class="label">kcal</span>
+                            </div>
+                        </div>
+                        <div class="macro-summary">
+                            <div class="macro protein">
+                                <div class="macro-bar" style="width: 80%"></div>
+                                <span class="macro-label">Protein</span>
+                                <span class="macro-value">128g / 160g</span>
+                            </div>
+                            <div class="macro carbs">
+                                <div class="macro-bar" style="width: 65%"></div>
+                                <span class="macro-label">Carbs</span>
+                                <span class="macro-value">210g / 320g</span>
+                            </div>
+                            <div class="macro fats">
+                                <div class="macro-bar" style="width: 70%"></div>
+                                <span class="macro-label">Fats</span>
+                                <span class="macro-value">56g / 80g</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="log-meal-btn"><i class="fas fa-plus"></i>Log Meal</button>
+            </div>
+        </section>
+
+        <section class="nutrition-content container">
+            <div class="meals-section">
+                <h2>Today's Meals</h2>
+                <div class="meal-cards">
+                    <div class="meal-card breakfast">
+                        <div class="meal-header">
+                            <h3><i class="fas fa-sun"></i>Breakfast</h3>
+                            <span class="meal-time">8:00 AM</span>
+                        </div>
+                        <div class="meal-items">
+                            <div class="meal-item">
+                                <span class="item-name">Oatmeal with Berries</span>
+                                <span class="item-calories">320 kcal</span>
+                            </div>
+                            <div class="meal-item">
+                                <span class="item-name">Greek Yogurt</span>
+                                <span class="item-calories">150 kcal</span>
+                            </div>
+                            <div class="meal-item">
+                                <span class="item-name">Banana</span>
+                                <span class="item-calories">105 kcal</span>
+                            </div>
+                        </div>
+                        <div class="meal-total">
+                            <span>Total</span>
+                            <span>575 kcal</span>
+                        </div>
+                    </div>
+
+                    <div class="meal-card lunch">
+                        <div class="meal-header">
+                            <h3><i class="fas fa-cloud-sun"></i>Lunch</h3>
+                            <span class="meal-time">1:30 PM</span>
+                        </div>
+                        <div class="meal-items">
+                            <div class="meal-item">
+                                <span class="item-name">Chicken Salad</span>
+                                <span class="item-calories">450 kcal</span>
+                            </div>
+                            <div class="meal-item">
+                                <span class="item-name">Whole Grain Bread</span>
+                                <span class="item-calories">180 kcal</span>
+                            </div>
+                        </div>
+                        <div class="meal-total">
+                            <span>Total</span>
+                            <span>630 kcal</span>
+                        </div>
+                    </div>
+
+                    <div class="meal-card dinner">
+                        <div class="meal-header">
+                            <h3><i class="fas fa-moon"></i>Dinner</h3>
+                            <span class="meal-time">7:00 PM</span>
+                        </div>
+                        <div class="meal-items">
+                            <div class="meal-item">
+                                <span class="item-name">Grilled Salmon</span>
+                                <span class="item-calories">420 kcal</span>
+                            </div>
+                            <div class="meal-item">
+                                <span class="item-name">Brown Rice</span>
+                                <span class="item-calories">215 kcal</span>
+                            </div>
+                        </div>
+                        <div class="meal-total">
+                            <span>Total</span>
+                            <span>635 kcal</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="nutrition-widgets">
+                <div class="widget water-tracker">
+                    <h3><i class="fas fa-tint"></i>Water Intake</h3>
+                    <div class="water-progress">
+                        <div class="water-bars">
+                            <div class="water-bar filled"></div>
+                            <div class="water-bar filled"></div>
+                            <div class="water-bar filled"></div>
+                            <div class="water-bar filled"></div>
+                            <div class="water-bar"></div>
+                            <div class="water-bar"></div>
+                            <div class="water-bar"></div>
+                            <div class="water-bar"></div>
+                        </div>
+                        <div class="water-stats">
+                            <span class="current">2.0L</span>
+                            <span class="target">/ 3.0L</span>
+                        </div>
+                    </div>
+                    <button class="add-water-btn">Add Glass</button>
+                </div>
+
+                <div class="widget nutrition-goals">
+                    <h3><i class="fas fa-bullseye"></i>Daily Goals</h3>
+                    <div class="goals-list">
+                        <div class="goal-item">
+                            <span class="goal-name">Stay within calorie budget</span>
+                            <span class="goal-status on-track">On Track</span>
+                        </div>
+                        <div class="goal-item">
+                            <span class="goal-name">Hit protein target</span>
+                            <span class="goal-status warning">Almost There</span>
+                        </div>
+                        <div class="goal-item">
+                            <span class="goal-name">Drink enough water</span>
+                            <span class="goal-status needs-work">Need 1L More</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer - Same as homepage -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3 class="logo">Mammoth<span>Fitness</span></h3>
+                <p class="tagline">Your Journey to Greatness Starts Here</p>
+            </div>
+            <nav class="footer-nav">
+                <div class="nav-column">
+                    <h4>Features</h4>
+                    <a href="#workouts">Workouts</a>
+                    <a href="#nutrition">Nutrition</a>
+                    <a href="#progress">Progress Tracking</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Community</h4>
+                    <a href="#forum">Forum</a>
+                    <a href="#challenges">Challenges</a>
+                    <a href="#events">Events</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#feedback">Feedback</a>
+                </div>
+            </nav>
+        </div>
+        <p class="copyright">&copy; 2025 MammothFitness. All rights reserved.</p>
+    </footer>
+
+    <script src="js/nutrition.js"></script>
+</body>
+</html>
