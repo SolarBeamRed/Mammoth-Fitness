@@ -1,15 +1,297 @@
 /* Progress Page Specific Styles */
-.progress-header {
-    background: linear-gradient(135deg, var(--primary-red), var(--accent-teal));
-    color: white;
-    padding: var(--spacing-md) 0;
-    margin-bottom: var(--spacing-lg);
+:root {
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
+
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+
+    --transition-fast: 0.2s ease;
+    --transition-medium: 0.3s ease;
+    
+    --success-green: #2ecc71;
+    --warning-yellow: #f1c40f;
+    --error-red: #e74c3c;
+}
+
+.content-wrapper {
+    padding: var(--spacing-lg) 0;
+    min-height: calc(100vh - 80px);
+    background: #f8f9fa;
 }
 
 .container {
     max-width: 1440px;
     margin: 0 auto;
     padding: 0 var(--spacing-lg);
+}
+
+/* Overview Section */
+.overview-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.section-header h2 {
+    font-family: var(--heading-font);
+    color: var(--dark-charcoal);
+    font-size: 1.8rem;
+}
+
+.time-filter {
+    display: flex;
+    gap: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.5);
+    padding: 4px;
+    border-radius: 8px;
+    box-shadow: var(--shadow-sm);
+}
+
+.time-filter button {
+    background: none;
+    border: none;
+    color: var(--dark-charcoal);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.time-filter button.active {
+    background: white;
+    color: var(--primary-red);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.metric-card {
+    background: white;
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.metric-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 1px solid var(--light-cream);
+}
+
+.metric-header h3 {
+    font-size: 1.2rem;
+    color: var(--dark-charcoal);
+}
+
+.metric-chart {
+    height: 200px;
+    position: relative;
+}
+
+/* Measurements */
+.measurements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: var(--spacing-sm);
+}
+
+.measurement {
+    text-align: center;
+    padding: var(--spacing-sm);
+    background: var(--light-cream);
+    border-radius: 8px;
+}
+
+.measurement .label {
+    display: block;
+    color: var(--neutral-gray);
+    font-size: 0.9rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.measurement .value {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Exercise Progress */
+.strength-progress {
+    margin-bottom: var(--spacing-xl);
+}
+
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.exercise-card {
+    background: white;
+    border-radius: 12px;
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-sm);
+}
+
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-sm);
+}
+
+.exercise-header h3 {
+    color: var(--dark-charcoal);
+    font-size: 1.2rem;
+}
+
+.progress-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.max-weight {
+    font-weight: 600;
+    color: var(--dark-charcoal);
+}
+
+.change {
+    font-size: 0.9rem;
+    padding: 4px 8px;
+    border-radius: 20px;
+}
+
+.change.positive {
+    background: var(--success-green);
+    color: white;
+}
+
+.change.negative {
+    background: var(--error-red);
+    color: white;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: var(--spacing-lg);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+}
+
+.modal-content h3 {
+    color: var(--dark-charcoal);
+    margin-bottom: var(--spacing-md);
+    padding-bottom: var(--spacing-xs);
+    border-bottom: 2px solid var(--light-cream);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+    display: block;
+    color: var(--dark-charcoal);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: var(--spacing-sm);
+    border: 2px solid var(--light-cream);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--dark-charcoal);
+    transition: var(--transition-fast);
+}
+
+.form-group input:focus {
+    border-color: var(--primary-red);
+    outline: none;
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--primary-red);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-medium);
+}
+
+.btn-primary:hover {
+    background: #d62d3a;
+    transform: translateY(-2px);
+}
+
+.btn-outline-small {
+    background: none;
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.btn-outline-small:hover {
+    background: var(--primary-red);
+    color: white;
+}
+
+/* Progress Page Specific Styles */
+.progress-header {
+    background: linear-gradient(135deg, var(--primary-red), var(--accent-teal));
+    color: white;
+    padding: var(--spacing-md) 0;
+    margin-bottom: var(--spacing-lg);
 }
 
 .progress-header .container {
@@ -107,123 +389,14 @@
     color: var(--dark-charcoal);
 }
 
-.change {
-    font-size: 0.9rem;
-    padding: 4px 8px;
-    border-radius: 20px;
-}
-
-.change.positive {
-    background: var(--success-green);
-    color: white;
-}
-
-.change.negative {
-    background: var(--primary-red);
-    color: white;
-}
-
 .chart-container {
     height: 300px;
-    position: relative;
-}
-
-/* Measurements Grid */
-.measurements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.measurement-card {
-    background: white;
-    border-radius: 12px;
-    padding: var(--spacing-md);
-    box-shadow: var(--shadow-sm);
-}
-
-.measurement-card h3 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: var(--dark-charcoal);
-    margin-bottom: var(--spacing-sm);
-}
-
-.measurement-value {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-sm);
-}
-
-.mini-chart-container {
-    height: 100px;
-    position: relative;
-}
-
-/* Strength Progress */
-.strength-progress h2 {
-    font-family: var(--heading-font);
-    color: var(--dark-charcoal);
-    margin-bottom: var(--spacing-md);
-}
-
-.exercises-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--spacing-md);
-}
-
-.exercise-card {
-    background: white;
-    border-radius: 12px;
-    padding: var(--spacing-md);
-    box-shadow: var(--shadow-sm);
-}
-
-.exercise-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-sm);
-}
-
-.exercise-header h3 {
-    color: var(--dark-charcoal);
-}
-
-.progress-stats {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-}
-
-.max-weight {
-    font-weight: 600;
-    color: var(--dark-charcoal);
-}
-
-.progress-chart {
-    height: 200px;
     position: relative;
 }
 
 /* Progress Photos */
 .progress-photos {
     margin-top: var(--spacing-lg);
-}
-
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: var(--spacing-md);
-}
-
-.section-header h2 {
-    font-family: var(--heading-font);
-    color: var(--dark-charcoal);
 }
 
 .upload-photo-btn {
@@ -290,26 +463,42 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .progress-header .container {
+    .container {
+        padding: 0 var(--spacing-md);
+    }
+
+    .section-header {
         flex-direction: column;
-        gap: var(--spacing-md);
+        gap: var(--spacing-sm);
+        text-align: center;
     }
-    
-    .timeframe-selector {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .log-progress-btn {
+
+    .time-filter {
         width: 100%;
         justify-content: center;
     }
-    
-    .photo-comparison {
-        flex-direction: column;
+
+    .metrics-grid,
+    .exercise-grid {
+        grid-template-columns: 1fr;
     }
-    
-    .comparison-arrow {
-        transform: rotate(90deg);
+
+    .metric-chart,
+    .progress-chart {
+        height: 180px;
+    }
+
+    .measurements-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .measurements-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        padding: var(--spacing-md);
     }
 }

@@ -50,22 +50,176 @@
 
     <!-- Main Content -->
     <main class="content-wrapper">
-        <section class="progress-header">
-            <div class="container">
-                <div class="progress-overview">
-                    <h1>Progress Tracking</h1>
-                    <div class="timeframe-selector">
-                        <button class="active">Week</button>
-                        <button>Month</button>
-                        <button>3 Months</button>
-                        <button>Year</button>
+        <!-- Overview Section -->
+        <section class="overview-section container">
+            <div class="section-header">
+                <h2>Progress Overview</h2>
+                <div class="time-filter">
+                    <button class="active">1M</button>
+                    <button>3M</button>
+                    <button>6M</button>
+                    <button>1Y</button>
+                    <button>All</button>
+                </div>
+            </div>
+            <div class="metrics-grid">
+                <!-- Weight Progress -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Weight Progress</h3>
+                        <span class="change positive">-2.5 kg</span>
+                    </div>
+                    <div class="metric-chart">
+                        <canvas id="weightChart"></canvas>
                     </div>
                 </div>
-                <button class="log-progress-btn"><i class="fas fa-plus"></i>Log Measurements</button>
+                
+                <!-- Body Fat % -->
+                <div class="metric-card">
+                    <div class="metric-header">
+                        <h3>Body Fat %</h3>
+                        <span class="change positive">-1.2%</span>
+                    </div>
+                    <div class="metric-chart">
+                        <canvas id="bodyFatChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Measurements -->
+                <div class="metric-card measurements">
+                    <div class="metric-header">
+                        <h3>Body Measurements</h3>
+                        <button id="addMeasurementBtn" class="btn-outline-small">Add New</button>
+                    </div>                    <div class="measurements-grid">
+                        <div class="measurement" data-measurement="chest">
+                            <span class="label">Chest</span>
+                            <span class="value">42"</span>
+                            <span class="change positive">+0.5"</span>
+                        </div>
+                        <div class="measurement" data-measurement="waist">
+                            <span class="label">Waist</span>
+                            <span class="value">32"</span>
+                            <span class="change positive">-1.0"</span>
+                        </div>
+                        <div class="measurement" data-measurement="biceps">
+                            <span class="label">Biceps</span>
+                            <span class="value">15"</span>
+                            <span class="change positive">+0.25"</span>
+                        </div>
+                        <div class="measurement" data-measurement="thighs">
+                            <span class="label">Thighs</span>
+                            <span class="value">24"</span>
+                            <span class="change positive">+0.5"</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="progress-content container">
+        <!-- Strength Progress -->
+        <section class="strength-progress container">
+            <div class="section-header">
+                <h2>Strength Progress</h2>
+                <button id="addExerciseBtn" class="btn-primary">Track New Exercise</button>
+            </div>
+            <div class="exercise-grid">                <!-- Bench Press -->
+                <div class="exercise-card" data-exercise="Bench Press">
+                    <div class="exercise-header">
+                        <h3>Bench Press</h3>
+                        <div class="progress-stats">
+                            <span class="max-weight">Loading...</span>
+                            <span class="change">...</span>
+                        </div>
+                    </div>
+                    <div class="progress-chart">
+                        <canvas id="benchChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Squat -->
+                <div class="exercise-card" data-exercise="Squat">
+                    <div class="exercise-header">
+                        <h3>Squat</h3>
+                        <div class="progress-stats">
+                            <span class="max-weight">Loading...</span>
+                            <span class="change">...</span>
+                        </div>
+                    </div>
+                    <div class="progress-chart">
+                        <canvas id="squatChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Deadlift -->
+                <div class="exercise-card" data-exercise="Deadlift">
+                    <div class="exercise-header">
+                        <h3>Deadlift</h3>
+                        <div class="progress-stats">
+                            <span class="max-weight">Loading...</span>
+                            <span class="change">...</span>
+                        </div>
+                    </div>
+                    <div class="progress-chart">
+                        <canvas id="deadliftChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Photos -->
+        <section class="progress-photos container">
+            <div class="section-header">
+                <h2>Progress Photos</h2>
+                <button id="addPhotoBtn" class="btn-primary">Add New Photos</button>
+            </div>
+            <div class="photos-grid">
+                <div class="photo-card">
+                    <div class="photo-header">March 2025</div>
+                    <div class="photo-grid">
+                        <img src="images/progress/front.jpg" alt="Front View">
+                        <img src="images/progress/side.jpg" alt="Side View">
+                        <img src="images/progress/back.jpg" alt="Back View">
+                    </div>
+                </div>
+                <!-- More photo cards... -->
+            </div>
+        </section>
+
+        <!-- Add Measurement Modal -->
+        <div id="measurementModal" class="modal hidden">
+            <div class="modal-content">
+                <h3>Add New Measurements</h3>                <form id="measurementForm">
+                    <div class="form-group">
+                        <label>Weight (kg)</label>
+                        <input type="number" name="weight" step="0.1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Body Fat %</label>
+                        <input type="number" name="body_fat" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label>Chest (inches)</label>
+                        <input type="number" step="0.25">
+                    </div>
+                    <div class="form-group">
+                        <label>Waist (inches)</label>
+                        <input type="number" step="0.25">
+                    </div>
+                    <div class="form-group">
+                        <label>Biceps (inches)</label>
+                        <input type="number" step="0.25">
+                    </div>
+                    <div class="form-group">
+                        <label>Thighs (inches)</label>
+                        <input type="number" step="0.25">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn-outline" onclick="closeModal()">Cancel</button>
+                        <button type="submit" class="btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>    </main>
             <!-- Weight Progress -->
             <div class="progress-card weight-progress">
                 <div class="card-header">

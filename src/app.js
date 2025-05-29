@@ -5,6 +5,7 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const workoutRoutes = require('./routes/workoutRoutes');
+const progressRoutes = require('./routes/progressRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -32,6 +33,7 @@ app.get('/signup', (req, res) => {
 })
 app.use(authRoutes);
 app.use('/api', workoutRoutes);
+app.use('/api/progress', progressRoutes);
 // END OF ROUTES
 
 //STARTING SERVER
