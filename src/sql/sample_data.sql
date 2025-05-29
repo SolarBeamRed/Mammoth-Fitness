@@ -1,6 +1,6 @@
 -- Sample progress data
 INSERT IGNORE INTO users (id, username, email, password) 
-VALUES (1, 'testuser', 'test@example.com', '$2b$10$abcdefghijklmnopqrstuvwxyz');
+VALUES (1, 'testuser', 'test@example.com', '$2b$10$B6t3vMZpwoNkGJYQVX3bDOLjE6.JBHUHIxLkZRZEIWUWSxJ0oTJjK');
 
 -- Sample progress metrics
 INSERT INTO progress_metrics (user_id, metric_name, value, recorded_at) VALUES
