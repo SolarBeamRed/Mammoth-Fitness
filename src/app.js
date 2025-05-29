@@ -4,6 +4,7 @@ const mysql = require('mysql2');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const authRoutes = require('./routes/auth');
+const workoutRoutes = require('./routes/workoutRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -30,6 +31,7 @@ app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, '../public/signup.html'));
 })
 app.use(authRoutes);
+app.use('/api', workoutRoutes);
 // END OF ROUTES
 
 //STARTING SERVER

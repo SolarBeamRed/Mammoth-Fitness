@@ -56,90 +56,55 @@
             </div>
         </section>
 
-        <section class="workouts-grid container">
-            <!-- Workout Templates -->
-            <div class="workout-section">
-                <h2>Workout Templates</h2>
-                <div class="templates-grid">
-                    <div class="workout-card">
-                        <div class="workout-header">
-                            <h3>Full Body Strength</h3>
-                            <span class="duration"><i class="far fa-clock"></i>60 min</span>
-                        </div>
-                        <div class="workout-meta">
-                            <span class="difficulty">Intermediate</span>
-                            <span class="equipment">Gym Required</span>
-                        </div>
-                        <p class="workout-description">Complete full body workout targeting all major muscle groups.</p>
-                        <button class="start-workout-btn">Start Workout</button>
-                    </div>
+        <!-- Replace entire "workouts-grid" section with: -->
+<section class="container workout-management">
+    <!-- Current Plan -->
+    <div class="current-plan card">
+        <h2>Your Current Plan</h2>
+        <div id="plan-details" class="hidden">
+            
+        </div>
+        <p id="no-plan-msg">No active plan selected</p>
+    </div>
 
-                    <div class="workout-card">
-                        <div class="workout-header">
-                            <h3>HIIT Cardio Blast</h3>
-                            <span class="duration"><i class="far fa-clock"></i>30 min</span>
-                        </div>
-                        <div class="workout-meta">
-                            <span class="difficulty">Advanced</span>
-                            <span class="equipment">Minimal Equipment</span>
-                        </div>
-                        <p class="workout-description">High-intensity interval training to maximize calorie burn.</p>
-                        <button class="start-workout-btn">Start Workout</button>
-                    </div>
+    <!-- Plan Selection Grid -->
+    <div class="plan-selection card">
+        <h2>Available Plans</h2>
+        <div id="plan-grid" class="plan-grid"></div>
+    </div>
 
-                    <div class="workout-card">
-                        <div class="workout-header">
-                            <h3>Core & Abs</h3>
-                            <span class="duration"><i class="far fa-clock"></i>20 min</span>
-                        </div>
-                        <div class="workout-meta">
-                            <span class="difficulty">Beginner</span>
-                            <span class="equipment">No Equipment</span>
-                        </div>
-                        <p class="workout-description">Strengthen your core with this targeted ab workout.</p>
-                        <button class="start-workout-btn">Start Workout</button>
-                    </div>
-                </div>
+    <!-- Custom Plan Creation -->
+    <div class="custom-plan card">
+        <h2>Create Custom Plan</h2>
+        <form id="customPlanForm">
+            <input type="text" id="planName" placeholder="Plan Name" required>
+            <textarea id="planDescription" placeholder="Plan Description (optional)" rows="3"></textarea>
+            <div id="exercise-list"></div>
+            <div class="form-actions">
+                <button type="button" id="addExerciseBtn">+ Add Exercise</button>
+                <button type="submit">Save Plan</button>
             </div>
+        </form>
+    </div>
 
-            <!-- Recent Workouts -->
-            <div class="workout-section">
-                <h2>Recent Workouts</h2>
-                <div class="recent-workouts">
-                    <div class="workout-history-card">
-                        <div class="workout-date">
-                            <span class="day">12</span>
-                            <span class="month">May</span>
-                        </div>
-                        <div class="workout-info">
-                            <h4>Full Body Strength</h4>
-                            <div class="stats">
-                                <span><i class="fas fa-fire"></i>450 cal</span>
-                                <span><i class="fas fa-clock"></i>58 min</span>
-                                <span><i class="fas fa-dumbbell"></i>12 exercises</span>
-                            </div>
-                        </div>
-                        <button class="view-details-btn">View Details</button>
-                    </div>
+    <!-- Workout Session Section -->
+    <div id="follow-along" class="hidden">
+        <div id="follow-step"></div>
+        <button id="completeStepBtn">Complete Exercise</button>
+        <button id="finishPlanBtn">Finish Workout</button>
+    </div>
 
-                    <div class="workout-history-card">
-                        <div class="workout-date">
-                            <span class="day">10</span>
-                            <span class="month">May</span>
-                        </div>
-                        <div class="workout-info">
-                            <h4>HIIT Cardio Blast</h4>
-                            <div class="stats">
-                                <span><i class="fas fa-fire"></i>380 cal</span>
-                                <span><i class="fas fa-clock"></i>32 min</span>
-                                <span><i class="fas fa-dumbbell"></i>8 exercises</span>
-                            </div>
-                        </div>
-                        <button class="view-details-btn">View Details</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <!-- Workout History -->
+    <div class="workout-history card">
+        <h2>Workout History</h2>
+        <table>
+            <thead>
+                <tr><th>Date</th><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th></tr>
+            </thead>
+            <tbody id="history-body"></tbody>
+        </table>
+    </div>
+</section>
     </main>
 
     <!-- Footer -->
