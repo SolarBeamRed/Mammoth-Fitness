@@ -5,11 +5,11 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const workoutRoutes = require('./routes/workoutRoutes');
-<<<<<<< HEAD
+
 const nutritionRoutes = require('./routes/nutritionRoutes');
-=======
+
 const progressRoutes = require('./routes/progressRoutes');
->>>>>>> 1870c0423c834339c016b23e95599e19cec612c8
+
 require('dotenv').config();
 
 const app = express();
