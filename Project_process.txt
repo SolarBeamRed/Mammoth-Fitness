@@ -101,3 +101,80 @@ Flow:
   '/api/user' -> auth.js receives request and forwards to authController.js
   cookie is checked, and respective session user details are given back as
   response -> homepage.js uses this to load whatever is needed
+
+
+
+
+````````````````````````````````````````````````````````````````````````
+
+
+
+Workouts:
+
+In the database, following tables are created:
+
+______________________________________________________________________
+
+exercises (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  image_url VARCHAR(255),
+  instructions TEXT
+);
+
+Stores all individual exercises, their images and description text. Each exercise will have a unique ID.
+_______________________________________________________________________
+
+plans (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  description TEXT,
+  created_by INT NULL,                             -- NULL = prebuilt plan
+  FOREIGN KEY (created_by) REFERENCES users(id)
+);
+
+Stores all plans that users can choose from. created_by column is used to identify prebuilt plans, or custom user built. All user built plans are stored in the same database, so to display only the one built by user, this created_by id can be compared with user_id
+______________________________________________________________________
+
+user_plan (
+  user_id INT PRIMARY KEY,                          -- one row per user
+  plan_id INT NOT NULL,                             -- FK into plans.id
+  start_date DATE NOT NULL,                         -- when they began this plan
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (plan_id) REFERENCES plans(id)
+);
+
+Stores which plan the user is currently using. Separating this from history is useful because displaying user current table in frontend will be much easier
+______________________________________________________________________
+
+workout_history (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT      NOT NULL,
+  exercise_id INT  NOT NULL,
+  plan_id INT      NULL,                            -- NULL if ad-hoc workout
+  occurred_on DATE NOT NULL,
+  sets INT         NOT NULL,
+  reps INT         NOT NULL,
+  weight DECIMAL(6,2) NOT NULL,                     -- e.g. 120.50
+  notes TEXT,
+  FOREIGN KEY (user_id) REFERENCES users(id),
+  FOREIGN KEY (exercise_id) REFERENCES exercises(id),
+  FOREIGN KEY (plan_id) REFERENCES plans(id)
+);
+
+Stores workout history to track plateaus and progress
+______________________________________________________________________
+
+CREATE TABLE plan_exercises (
+  id            INT AUTO_INCREMENT PRIMARY KEY,
+  plan_id       INT    NOT NULL,
+  exercise_id   INT    NOT NULL,
+  day_of_week   ENUM('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday') NOT NULL,
+  display_order INT    NOT NULL DEFAULT 1,
+  FOREIGN KEY (plan_id)     REFERENCES plans(id)     ON DELETE CASCADE,
+  FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
+);
+Stores exercises in different plans for follow alongs
+
+Then, routes/workoutRoutes.js for adding backend route for workouts page
+controllers/workoutControllers.js for route logic

@@ -1,147 +1,199 @@
+// File: public/js/workouts.js
 document.addEventListener('DOMContentLoaded', async () => {
-  const usernameEls = document.querySelectorAll('.username');
-  const noPlanMsg = document.getElementById('no-plan-msg');
-  const planDetails = document.getElementById('plan-details');
-  const planGrid = document.getElementById('plan-grid');
-  const customForm = document.getElementById('customPlanForm');
-  const exerciseList = document.getElementById('exercise-list');
+  /* Element refs */
+  const usernameEls    = document.querySelectorAll('.username');
+  const noPlanMsg      = document.getElementById('no-plan-msg');
+  const planDetails    = document.getElementById('plan-details');
+  const planGrid       = document.getElementById('plan-grid');
+  const customForm     = document.getElementById('customPlanForm');
+  const exerciseList   = document.getElementById('exercise-list');
   const addExerciseBtn = document.getElementById('addExerciseBtn');
-  const followSection = document.getElementById('follow-along');
-  const followStep = document.getElementById('follow-step');
-  const completeStepBtn = document.getElementById('completeStepBtn');
-  const finishPlanBtn = document.getElementById('finishPlanBtn');
-  const historyBody = document.getElementById('history-body');
+  const followSection  = document.getElementById('follow-along');
+  const followStep     = document.getElementById('follow-step');
+  const addSetBtn      = document.getElementById('addSetBtn');
+  const completeBtn    = document.getElementById('completeStepBtn');
+  const finishBtn      = document.getElementById('finishPlanBtn');
+  const historyCards   = document.querySelector('.history-cards');
+  const startBtn       = document.getElementById('startWorkoutBtn');
 
-  // 1. Authenticate and set username
+  // auth
   let user;
   try {
-    const res = await fetch('/api/user'); user = await res.json();
+    const r = await fetch('/api/user');
+    user = await r.json();
     usernameEls.forEach(el => el.textContent = user.username);
-  } catch {
-    return window.location.href = '/login.html';
-  }
+  } catch { return window.location = '/login.html'; }
 
-  // Helpers
-  const fetchJSON = (url, opts) => fetch(url, opts).then(r => r.ok ? r.json() : []);
+  const fetchJSON = (url, opts) => fetch(url, opts).then(r=>r.ok?r.json():[]);
 
-  // 2. Load current plan
-  const loadUserPlan = async () => {
-    const res = await fetch('/api/user/plan');
-    if (!res.ok) return;
-    const plan = await res.json();
+  // load current plan
+  async function loadPlan() {
+    const r = await fetch('/api/user/plan');
+    if (!r.ok) return;
+    const plan = await r.json();
     noPlanMsg.classList.add('hidden');
     planDetails.classList.remove('hidden');
-    planDetails.innerHTML = `<h3>${plan.name}</h3>${plan.description ? `<p>${plan.description}</p>` : ''}`;
-  };
+    planDetails.innerHTML = `<h3>${plan.name}</h3>${plan.description?`<p>${plan.description}</p>`:''}`;
+  }
 
-  // 3. Load all plans
-  const loadPlans = async () => {
+  // load plans
+  async function loadPlans() {
     const plans = await fetchJSON('/api/plans');
     planGrid.innerHTML = '';
-    plans.forEach(p => {
-      const card = document.createElement('div'); card.className='plan-card';
-      card.innerHTML = `<h3>${p.name}</h3>${p.description?`<p>${p.description}</p>`:''}` +
-        `<button class='btn-primary' data-id='${p.id}'>Select</button>` +
-        `${p.created_by===user.id?`<button class='btn-outline delete-plan' data-id='${p.id}'>Delete</button>`:''}`;
-      // select
-      card.querySelector('.btn-primary').onclick = async () => { await fetch('/api/user/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan_id:p.id})}); loadUserPlan(); };      // delete
-      if (p.created_by===user.id) {
-        card.querySelector('.delete-plan').onclick = async () => {
-          if (!confirm('Are you sure you want to delete this workout plan? This action cannot be undone.')) {
-            return;
-          }
-          
-          try {
-            const response = await fetch(`/api/plans/${p.id}`, {
-              method: 'DELETE',
-              headers: { 'Content-Type': 'application/json' }
-            });
-            
-            if (!response.ok) {
-              const errorText = await response.text();
-              throw new Error(errorText || 'Failed to delete plan');
-            }
-            
-            // Show success message
-            const notification = document.createElement('div');
-            notification.className = 'notification success';
-            notification.textContent = 'Plan deleted successfully';
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-            
-            // Reload plans and current plan (in case the deleted plan was selected)
-            await loadPlans();
-            await loadUserPlan();
-            
-          } catch (error) {
-            console.error('Delete failed:', error);
-            const notification = document.createElement('div');
-            notification.className = 'notification error';
-            notification.textContent = error.message || 'Failed to delete plan';
-            document.body.appendChild(notification);
-            setTimeout(() => notification.remove(), 3000);
-          }
-        };
-      }
-      planGrid.appendChild(card);
-    });
-  };
+    for (let p of plans) {
+      const div = document.createElement('div');
+      div.className = 'plan-card';
+      div.innerHTML = `
+        <h3>${p.name}</h3>${p.description?`<p>${p.description}</p>`:''}
+        <button class="btn-primary">Select</button>
+        ${p.created_by===user.id?'<button class="btn-outline delete-plan">Delete</button>':''}
+      `;
+      div.querySelector('button.btn-primary').onclick = async ()=>{
+        await fetch('/api/user/plan',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({plan_id:p.id})});
+        await loadPlan();
+      };
+      const del = div.querySelector('.delete-plan');
+      if (del) del.onclick = async ()=>{
+        if (!confirm('Delete plan?')) return;
+        await fetch(`/api/plans/${p.id}`,{method:'DELETE'});
+        await loadPlans(); await loadPlan();
+      };
+      planGrid.append(div);
+    }
+  }
 
-  // 4. Custom plan form
-  let exercises=[];
-  const allExercises = await fetchJSON('/api/exercises');
-  const addRow = () => {
-    const row = document.createElement('div'); row.className='exercise-row';
-    row.innerHTML = `<select name='exercise_id'>${allExercises.map(e=>`<option value='${e.id}'>${e.name}</option>`).join('')}</select>
-      <input type='number' name='sets' placeholder='Sets' min=1 required>
-      <input type='number' name='reps' placeholder='Reps' min=1 required>
-      <input type='number' name='weight' placeholder='Weight' min=0 required>`;
-    exerciseList.appendChild(row);
-  };
+  // custom form
+  const allX = await fetchJSON('/api/exercises');
+  function addRow() {
+    const row = document.createElement('div');
+    row.className = 'exercise-row';
+    row.innerHTML = `
+      <select name="exercise_id">${allX.map(e=>`<option value="${e.id}">${e.name}</option>`).join('')}</select>
+      <input type="number" name="sets"   placeholder="Sets"   min="1" required>
+      <input type="number" name="reps"   placeholder="Reps"   min="1" required>
+      <input type="number" name="weight" placeholder="Weight" min="0" required>`;
+    exerciseList.append(row);
+  }
   addExerciseBtn.onclick = addRow;
-  customForm.onsubmit = async e => {
+  customForm.onsubmit = async e=>{
     e.preventDefault();
     const name = document.getElementById('planName').value;
-    const description = document.getElementById('planDescription').value;
-
+    const desc = document.getElementById('planDescription').value;
     const rows = [...exerciseList.querySelectorAll('.exercise-row')];
-    const exs=rows.map(r=>({exercise_id:+r.querySelector('select').value,sets:+r.querySelector('[name=sets]').value,reps:+r.querySelector('[name=reps]').value,weight:+r.querySelector('[name=weight]').value}));
-    await fetch('/api/plans',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name, description, exercises:exs})});
-    customForm.reset(); exerciseList.innerHTML=''; loadPlans();
+    const exs  = rows.map(r=>({
+      exercise_id:+r.querySelector('select').value,
+      sets:+r.querySelector('[name=sets]').value,
+      reps:+r.querySelector('[name=reps]').value,
+      weight:+r.querySelector('[name=weight]').value
+    }));
+    await fetch('/api/plans',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,description:desc,exercises:exs})});
+    customForm.reset(); exerciseList.innerHTML=''; addRow(); await loadPlans();
   };
 
-  // 5. Workout history
-  const loadHistory = async () => {
-    const hist = await fetchJSON('/api/workout/history'); historyBody.innerHTML='';
-    hist.forEach(h=>historyBody.innerHTML+=`<tr><td>${h.occurred_on}</td><td>${h.exercise}</td><td>${h.sets}</td><td>${h.reps}</td><td>${h.weight}</td></tr>`);
-  };
+  // workout history → cards
+  // 5️⃣ WORKOUT HISTORY – grouped, collapsible
+async function loadHistory() {
+  const hist = await fetchJSON('/api/workout/history');
+  // Group by date → then by exercise
+  const byDate = {};
+  hist.forEach(row => {
+    if (!byDate[row.occurred_on]) byDate[row.occurred_on] = {};
+    const day = byDate[row.occurred_on];
+    if (!day[row.exercise]) day[row.exercise] = [];
+    day[row.exercise].push({ sets: row.sets, reps: row.reps, weight: row.weight });
+  });
 
-  // 6. Follow-along feature (basic)
-  let followPlan = null, followIdx=0;
-  const loadFollow = async () => {
-    const plan = await fetchJSON('/api/user/plan'); 
-    if(!plan) return;
-    
-    // Use the correct endpoint
-    const details = await fetchJSON(`/api/plans/${plan.id}/details`);
-    
-    followPlan = details.exercises; 
-    followIdx = 0;
-    showStep(); 
+  const container = document.getElementById('history-list');
+  container.innerHTML = '';
+
+  for (const [date, exercises] of Object.entries(byDate)) {
+    const card = document.createElement('div');
+    card.className = 'day-card';
+    card.innerHTML = `
+      <header>
+        <span>${date}</span>
+        <button class="toggle-btn">▶</button>
+      </header>
+      <div class="details">
+        ${Object.entries(exercises).map(([exName, setsArr]) => `
+          <div class="exercise-card">
+            <h4>${exName}</h4>
+            <ul class="set-list">
+              ${setsArr.map(s => `<li>${s.sets}×${s.reps} @ ${s.weight ?? 0}kg</li>`).join('')}
+            </ul>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    // Toggle expand/collapse
+    const hdr = card.querySelector('header');
+    const btn = card.querySelector('.toggle-btn');
+    hdr.onclick = () => {
+      const expanded = card.classList.toggle('expanded');
+      btn.textContent = expanded ? '▼' : '▶';
+    };
+    container.append(card);
+  }
+}
+  // follow-along
+  let planList=[], idx=0;
+  async function loadFollow() {
+    const pl = await fetchJSON('/api/user/plan');
+    if (!pl.id) return alert('Select a plan first');
+    const details = await fetchJSON(`/api/plans/${pl.id}/details`);
+    planList = details.exercises;
+    idx = 0;
+    if (!planList.length) return alert('No exercises today.');
     followSection.classList.remove('hidden');
+    showStep();
+  }
+  function showStep() {
+    if (idx>=planList.length) {
+      followSection.classList.add('hidden');
+      return loadHistory();
+    }
+    const ex = planList[idx];
+    followStep.innerHTML = `
+      <h3>${ex.name}</h3>
+      <div class="form-row">
+        <label>Sets:<input id="setsInput" type="number" min="1" value="${ex.sets||1}"></label>
+        <label>Reps:<input id="repsInput" type="number" min="1" value="${ex.reps||1}"></label>
+        <label>Weight:<input id="weightInput" type="number" min="0" value="0"></label>
+      </div>`;
+  }
+  completeBtn.onclick = async () => {
+    const si = document.getElementById('setsInput'),
+          ri = document.getElementById('repsInput'),
+          wi = document.getElementById('weightInput');
+    if (!si||!ri||!wi) return alert('Inputs missing');
+    const ex = planList[idx];
+    await fetch('/api/workout/log',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        exercise_id: ex.exercise_id,
+        sets:+si.value,
+        reps:+ri.value,
+        weight:+wi.value
+      })
+    });
+    idx++; showStep();
   };
-  const showStep = () => {
-    if(followIdx>=followPlan.length){ followSection.classList.add('hidden'); return; }
-    const c = followPlan[followIdx];
-    followStep.innerHTML = `<h3>${c.name}</h3><p>Sets: ${c.sets}, Reps: ${c.reps}</p>`;
+  finishBtn.onclick = ()=> followSection.classList.add('hidden');
+  addSetBtn.onclick = ()=> {
+    const row = document.createElement('div');
+    row.className = 'set-row form-row';
+    row.innerHTML = `
+      <input type="number" placeholder="Sets" min="1">
+      <input type="number" placeholder="Reps" min="1">
+      <input type="number" placeholder="Weight" min="0">`;
+    followStep.append(row);
   };
-  completeStepBtn.onclick = async () => {
-    const c = followPlan[followIdx];
-    await fetch('/api/workout/log',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({exercise_id:c.exercise_id,sets:c.sets,reps:c.reps,weight:null})});
-    followIdx++; showStep(); loadHistory();
-  };
-  finishPlanBtn.onclick = () => { followSection.classList.add('hidden'); };
 
-  // Initialize
-  await loadUserPlan(); await loadPlans(); await loadHistory(); addRow(); await loadFollow();
+  /* INIT */
+  await loadPlan();
+  await loadPlans();
+  await loadHistory();
+  addRow();
+  startBtn.onclick = loadFollow;
 });

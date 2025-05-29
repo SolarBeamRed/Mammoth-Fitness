@@ -123,15 +123,19 @@ exports.logWorkout = (req, res) => {
 // 8. GET /api/plans/:id/details
 exports.getPlanDetails = (req, res) => {
   const planId = req.params.id;
+  // Determine today's weekday in JS and pass to SQL
+  const weekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const today = weekdays[new Date().getDay()];
+
   const sql = `
-    SELECT pe.exercise_id, ex.name, pe.sets, pe.reps
+    SELECT pe.exercise_id, ex.name, pe.display_order
     FROM plan_exercises pe
     JOIN exercises ex ON pe.exercise_id = ex.id
-    WHERE pe.plan_id = ?
-    ORDER BY pe.id
+    WHERE pe.plan_id = ? AND pe.day_of_week = ?
+    ORDER BY pe.display_order
   `;
-  db.query(sql, [planId], (err, results) => {
-    if (err) return res.status(500).send('Error fetching plan details');
+  db.query(sql, [planId, today], (err, results) => {
+    if (err) return res.status(500).send('Error fetching today’s plan details');
     res.json({ exercises: results });
   });
 };
@@ -139,11 +143,10 @@ exports.getPlanDetails = (req, res) => {
 // 9. DELETE /api/plans/:id
 exports.deletePlan = (req, res) => {
   const planId = req.params.id;
-  // First delete any plan_exercises or history if needed:
-  db.query('DELETE FROM plan_exercises WHERE plan_id = ?', [planId], (e1) => {
-    if (e1) return res.status(500).send('Error cleaning exercises');
-    db.query('DELETE FROM plans WHERE id = ?', [planId], (e2) => {
-      if (e2) return res.status(500).send('Error deleting plan');
+  db.query('DELETE FROM workout_history WHERE plan_id = ?', [planId], (err1) => {
+    if (err1) return res.status(500).send('Error cleaning plan data');
+    db.query('DELETE FROM plans WHERE id = ?', [planId], (err2) => {
+      if (err2) return res.status(500).send('Error deleting plan');
       res.sendStatus(204);
     });
   });

@@ -1,143 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workouts - Mammoth Fitness</title>
-    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="css/homepage.css">
-    <link rel="stylesheet" href="css/workouts.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Mammoth Fitness – Workouts</title>
+  <link rel="stylesheet" href="css/homepage.css">
+  <link rel="stylesheet" href="css/workouts.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation Bar - Same as homepage -->
-    <header class="main-header">
-        <div class="header-content">
-            <div class="branding">
-                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
-                <h1 class="logo">Mammoth<span>Fitness</span></h1>
-            </div>
-            
-            <nav class="main-nav">
-                <ul class="nav-list">
-                    <li class="nav-item"><a href="homepage.html"><i class="fas fa-home"></i>Dashboard</a></li>
-                    <li class="nav-item"><a href="workouts.html" class="active"><i class="fas fa-dumbbell"></i>Workouts</a></li>
-                    <li class="nav-item"><a href="nutrition.html"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
-                    <li class="nav-item"><a href="progress.html"><i class="fas fa-chart-line"></i>Progress</a></li>
-                    <li class="nav-item"><a href="community.html"><i class="fas fa-users"></i>Community</a></li>
-                </ul>
-            </nav>
+  <header class="main-header">…</header>
 
-            <div class="user-panel">
-                <div class="user-greeting">
-                    <span class="welcome">Welcome,</span>
-                    <span class="username">@Strongman123</span>
-                </div>
-                <div class="user-menu">
-                    <button class="avatar">
-                        <img src="images/user-img.svg" alt="User Avatar">
-                    </button>
-                    <div class="dropdown-menu">
-                        <a href="profile.html"><i class="fas fa-user-cog"></i>Profile Settings</a>
-                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
-                    </div>
-                </div>
-            </div>
+  <main class="workouts-page">
+    <!-- ★ FOLLOW ALONG (now up here) ★ -->
+    <section id="follow-along" class="follow-along card hidden">
+      <h2>🏃‍♂️ Follow Along</h2>
+      <div id="follow-step" class="follow-step">
+        <!-- injected per exercise -->
+      </div>
+      <div class="follow-controls">
+        <button id="addSetBtn" class="btn-outline">+ Add Set</button>
+        <button id="completeStepBtn" class="btn-primary">Complete Exercise</button>
+        <button id="finishPlanBtn" class="btn-outline">Finish Workout</button>
+      </div>
+    </section>
+
+    <!-- CURRENT PLAN -->
+    <section class="current-plan card">
+      <h2>Your Current Plan</h2>
+      <button id="startWorkoutBtn" class="btn-primary">Start Today's Workout</button>
+      <div class="plan-content">
+        <p id="no-plan-msg">You have not chosen a plan yet.</p>
+        <div id="plan-details" class="hidden"></div>
+      </div>
+    </section>
+
+    <!-- PLAN SELECTION -->
+    <section class="prebuilt-plans card">
+      <h2>Available Plans</h2>
+      <div id="plan-grid" class="plan-grid"></div>
+    </section>
+
+    <!-- CUSTOM PLAN CREATION -->
+    <section class="custom-plan card">
+      <h2>Create Custom Plan</h2>
+      <form id="customPlanForm">
+        <input type="text" id="planName" placeholder="Plan Name" required>
+        <textarea id="planDescription" placeholder="Description (optional)"></textarea>
+        <div id="exercise-list"></div>
+        <div class="form-actions">
+          <button type="button" id="addExerciseBtn" class="btn-outline">+ Add Exercise</button>
+          <button type="submit" class="btn-primary">Save Plan</button>
         </div>
-    </header>
+      </form>
+    </section>
 
-    <!-- Main Content -->
-    <main class="content-wrapper">
-        <section class="workouts-header">
-            <div class="container">
-                <h1>Your Workouts</h1>
-                <button class="create-workout-btn"><i class="fas fa-plus"></i>Create New Workout</button>
-            </div>
-        </section>
-
-        <!-- Replace entire "workouts-grid" section with: -->
-<section class="container workout-management">
-    <!-- Current Plan -->
-    <div class="current-plan card">
-        <h2>Your Current Plan</h2>
-        <div id="plan-details" class="hidden">
-            
-        </div>
-        <p id="no-plan-msg">No active plan selected</p>
-    </div>
-
-    <!-- Plan Selection Grid -->
-    <div class="plan-selection card">
-        <h2>Available Plans</h2>
-        <div id="plan-grid" class="plan-grid"></div>
-    </div>
-
-    <!-- Custom Plan Creation -->
-    <div class="custom-plan card">
-        <h2>Create Custom Plan</h2>
-        <form id="customPlanForm">
-            <input type="text" id="planName" placeholder="Plan Name" required>
-            <textarea id="planDescription" placeholder="Plan Description (optional)" rows="3"></textarea>
-            <div id="exercise-list"></div>
-            <div class="form-actions">
-                <button type="button" id="addExerciseBtn">+ Add Exercise</button>
-                <button type="submit">Save Plan</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Workout Session Section -->
-    <div id="follow-along" class="hidden">
-        <div id="follow-step"></div>
-        <button id="completeStepBtn">Complete Exercise</button>
-        <button id="finishPlanBtn">Finish Workout</button>
-    </div>
-
-    <!-- Workout History -->
-    <div class="workout-history card">
+    <!-- WORKOUT HISTORY -->
+    <section class="workout-history card">
         <h2>Workout History</h2>
-        <table>
-            <thead>
-                <tr><th>Date</th><th>Exercise</th><th>Sets</th><th>Reps</th><th>Weight</th></tr>
-            </thead>
-            <tbody id="history-body"></tbody>
-        </table>
-    </div>
-</section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3 class="logo">Mammoth<span>Fitness</span></h3>
-                <p class="tagline">Your Journey to Greatness Starts Here</p>
-            </div>
-            <nav class="footer-nav">
-                <div class="nav-column">
-                    <h4>Features</h4>
-                    <a href="#workouts">Workouts</a>
-                    <a href="#nutrition">Nutrition</a>
-                    <a href="#progress">Progress Tracking</a>
-                </div>
-                <div class="nav-column">
-                    <h4>Community</h4>
-                    <a href="#forum">Forum</a>
-                    <a href="#challenges">Challenges</a>
-                    <a href="#events">Events</a>
-                </div>
-                <div class="nav-column">
-                    <h4>Support</h4>
-                    <a href="#help">Help Center</a>
-                    <a href="#contact">Contact Us</a>
-                    <a href="#feedback">Feedback</a>
-                </div>
-            </nav>
+        <div class="history-list" id="history-list">
+            <!-- JS will inject daily cards -->
         </div>
-        <p class="copyright">&copy; 2025 MammothFitness. All rights reserved.</p>
-    </footer>
+    </section>
+  </main>
 
-    <script src="js/workouts.js"></script>
+  <footer class="main-footer">…</footer>
+  <script src="js/workouts.js"></script>
 </body>
 </html>

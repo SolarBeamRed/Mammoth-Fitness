@@ -568,3 +568,121 @@ button[type="submit"]:hover {
         display: none;
     }
 }
+
+/* Follow Along */
+.follow-along {
+  margin-bottom: var(--spacing-lg);
+  border-left: 4px solid var(--accent-teal);
+  padding: var(--spacing-md);
+}
+.follow-along h2 {
+  color: var(--accent-teal);
+  margin-bottom: var(--spacing-sm);
+}
+.follow-step {
+  background: var(--light-cream);
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-md);
+}
+.follow-step .form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+.follow-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+.follow-controls .btn-outline,
+.follow-controls .btn-primary {
+  flex: 1;
+}
+
+/* Workout History as cards */
+.history-cards {
+  display: grid;
+  gap: var(--spacing-md);
+}
+.history-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: var(--spacing-md);
+  border-radius: 8px;
+  box-shadow: var(--shadow-sm);
+}
+.history-card h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--dark-charcoal);
+}
+.history-card .stats {
+  display: flex;
+  gap: var(--spacing-lg);
+}
+.history-card .stats span {
+  font-size: 0.9rem;
+  color: var(--neutral-gray);
+}
+
+/* Tweak plan details, current-plan, etc. */
+.current-plan .plan-content {
+  margin-top: var(--spacing-sm);
+}
+.plan-details h3 {
+  margin-bottom: var(--spacing-xs);
+  color: var(--dark-charcoal);
+}
+.plan-details p {
+  color: var(--neutral-gray);
+}
+
+/* Hide default table */
+.workout-history table { display: none; }
+
+/* Reuse button styles */
+
+.history-list .day-card {
+  border: 1px solid var(--light-cream);
+  border-radius: 8px;
+  margin-bottom: var(--spacing-md);
+  overflow: hidden;
+}
+.day-card > header {
+  background: var(--primary-red);
+  color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+.day-card > .details {
+  display: none;
+  background: white;
+  padding: var(--spacing-md);
+}
+.day-card.expanded .details {
+  display: block;
+}
+.day-card .exercise-card {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  border-radius: 6px;
+  background: var(--light-cream);
+}
+.exercise-card h4 {
+  margin: 0 0 var(--spacing-xs);
+  font-size: 1rem;
+}
+.exercise-card .set-list {
+  list-style: none;
+  padding: 0;
+}
+.exercise-card .set-list li {
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-xs);
+}
