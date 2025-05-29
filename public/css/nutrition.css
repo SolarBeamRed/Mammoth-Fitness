@@ -5,15 +5,17 @@
 :root {
   /* Colors */
   --primary-blue: #4A90E2;
-  --primary-red: #FF6B6B;
+  --primary-red: #E63946;
+  --accent-teala: #457B9D;
   --accent-teal: #50E3C2;
   --accent-orange: #F5A623;
   --accent-purple: #9013FE;
   --success-green: #7ED321;
   --warning-yellow: #F8E71C;
   --energy-red: #E74C3C;
-  --light-cream: #F9F9F9;
+  --light-cream: #F1FAEE;
   --light-gray: #E0E0E0;
+  --neutral-gray: #A8A8A8;
   --dark-gray: #4A4A4A;
   
   /* Typography */
@@ -43,6 +45,7 @@
   padding: var(--spacing-lg);
   display: grid;
   gap: var(--spacing-lg);
+  background-color: var(--light-cream);
 }
 
 .nutrition-grid {
@@ -81,6 +84,9 @@
 }
 
 /* Overview Card */
+.overview-card{
+   background: linear-gradient(135deg, var(--primary-red), var(--accent-teala));
+}
 .overview-card .overview-header {
   display: flex;
   justify-content: space-between;
