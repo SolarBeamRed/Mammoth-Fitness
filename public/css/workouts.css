@@ -112,20 +112,23 @@
 }
 
 .start-workout-btn {
-    width: 100%;
-    background: var(--primary-red);
-    color: white;
-    border: none;
+    width: fit-content;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background: white;
+    color: var(--primary-red);
+    border: 2px solid var(--primary-red);
     border-radius: 8px;
-    padding: var(--spacing-sm);
     font-weight: 600;
-    cursor: pointer;
+    margin: var(--spacing-md) auto;
     transition: var(--transition-medium);
+    display: block;
 }
 
 .start-workout-btn:hover {
-    background: #d62d3a;
+    background: white;
+    color: var(--primary-red);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
 .recent-workouts {
@@ -652,37 +655,70 @@ button[type="submit"]:hover {
   overflow: hidden;
 }
 .day-card > header {
-  background: var(--primary-red);
-  color: white;
+  background: white;
   padding: var(--spacing-sm) var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.day-card > header:hover {
+  background: var(--light-cream);
+}
+.day-card > header span {
+  font-weight: 600;
+  color: var(--dark-charcoal);
+}
+.toggle-btn {
+  background: none;
+  border: none;
+  color: var(--neutral-gray);
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.day-card.expanded .toggle-btn {
+  transform: rotate(90deg);
 }
 .day-card > .details {
   display: none;
   background: white;
   padding: var(--spacing-md);
+  border-top: 1px solid var(--light-cream);
 }
 .day-card.expanded .details {
   display: block;
 }
-.day-card .exercise-card {
-  margin-bottom: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  border-radius: 6px;
+.exercise-card {
   background: var(--light-cream);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: 6px;
+  margin-bottom: var(--spacing-sm);
+}
+.exercise-card:last-child {
+  margin-bottom: 0;
 }
 .exercise-card h4 {
-  margin: 0 0 var(--spacing-xs);
+  color: var(--dark-charcoal);
+  margin-bottom: var(--spacing-xs);
   font-size: 1rem;
 }
-.exercise-card .set-list {
+.set-list {
   list-style: none;
   padding: 0;
-}
-.exercise-card .set-list li {
+  margin: 0;
+  color: var(--neutral-gray);
   font-size: 0.9rem;
-  margin-bottom: var(--spacing-xs);
+}
+.set-list li {
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.set-list li:last-child {
+  border-bottom: none;
 }

@@ -90,49 +90,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     customForm.reset(); exerciseList.innerHTML=''; addRow(); await loadPlans();
   };
 
+  // Format date for display
+  function formatDate(dateStr) {
+      return new Date(dateStr).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric'
+      });
+  }
+
   // workout history → cards
   // 5️⃣ WORKOUT HISTORY – grouped, collapsible
 async function loadHistory() {
   const hist = await fetchJSON('/api/workout/history');
-  // Group by date → then by exercise
   const byDate = {};
   hist.forEach(row => {
-    if (!byDate[row.occurred_on]) byDate[row.occurred_on] = {};
-    const day = byDate[row.occurred_on];
-    if (!day[row.exercise]) day[row.exercise] = [];
-    day[row.exercise].push({ sets: row.sets, reps: row.reps, weight: row.weight });
+      if (!byDate[row.occurred_on]) byDate[row.occurred_on] = {};
+      const day = byDate[row.occurred_on];
+      if (!day[row.exercise]) day[row.exercise] = [];
+      day[row.exercise].push({ sets: row.sets, reps: row.reps, weight: row.weight });
   });
 
   const container = document.getElementById('history-list');
   container.innerHTML = '';
 
   for (const [date, exercises] of Object.entries(byDate)) {
-    const card = document.createElement('div');
-    card.className = 'day-card';
-    card.innerHTML = `
-      <header>
-        <span>${date}</span>
-        <button class="toggle-btn">▶</button>
-      </header>
-      <div class="details">
-        ${Object.entries(exercises).map(([exName, setsArr]) => `
-          <div class="exercise-card">
-            <h4>${exName}</h4>
-            <ul class="set-list">
-              ${setsArr.map(s => `<li>${s.sets}×${s.reps} @ ${s.weight ?? 0}kg</li>`).join('')}
-            </ul>
+      const card = document.createElement('div');
+      card.className = 'day-card';
+      card.innerHTML = `
+          <header>
+              <span>${formatDate(date)}</span>
+              <button class="toggle-btn"><i class="fas fa-chevron-right"></i></button>
+          </header>
+          <div class="details">
+          ${Object.entries(exercises).map(([exName, setsArr]) => `
+              <div class="exercise-card">
+                  <h4>${exName}</h4>
+                  <ul class="set-list">
+                      ${setsArr.map(s => `<li>${s.sets}×${s.reps} @ ${s.weight ?? 0}kg</li>`).join('')}
+                  </ul>
+              </div>
+          `).join('')}
           </div>
-        `).join('')}
-      </div>
-    `;
-    // Toggle expand/collapse
-    const hdr = card.querySelector('header');
-    const btn = card.querySelector('.toggle-btn');
-    hdr.onclick = () => {
-      const expanded = card.classList.toggle('expanded');
-      btn.textContent = expanded ? '▼' : '▶';
-    };
-    container.append(card);
+      `;
+      // Toggle expand/collapse
+      const hdr = card.querySelector('header');
+      const btn = card.querySelector('.toggle-btn');
+      hdr.onclick = () => {
+          const expanded = card.classList.toggle('expanded');
+          btn.querySelector('i').className = expanded ? 'fas fa-chevron-down' : 'fas fa-chevron-right';
+      };
+      container.append(card);
   }
 }
   // follow-along
