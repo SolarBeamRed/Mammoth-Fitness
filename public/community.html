@@ -49,49 +49,53 @@
 
     <!-- Main Content -->
     <main class="content-wrapper">
-        <div class="community-content">
+        <div class="community-content container">
             <!-- Left Sidebar - User Profile -->
             <aside class="profile-section">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <img src="images/user-img.svg" alt="User Profile">
+                        <img src="images/user-img.svg" alt="User Avatar">
                     </div>
                     <div class="profile-info">
-                        <h2>John Doe</h2>
-                        <p class="bio">🏋️‍♂️ Fitness enthusiast | 💪 Strength training</p>
+                        <h2 class="username">Loading...</h2>
+                        <p class="bio">Fitness enthusiast</p>
                     </div>
                 </div>
+
                 <div class="profile-stats">
                     <div class="stat-item">
-                        <span class="stat-value">248</span>
+                        <span class="stat-value" id="postsCount">0</span>
                         <span class="stat-label">Posts</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-value">1.2k</span>
+                        <span class="stat-value" id="followersCount">0</span>
                         <span class="stat-label">Followers</span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-value">890</span>
+                        <span class="stat-value" id="followingCount">0</span>
                         <span class="stat-label">Following</span>
                     </div>
                 </div>
+
                 <div class="achievements">
                     <h3>Achievements</h3>
-                    <div class="achievement-badges">
-                        <!-- Add achievement badges here -->
+                    <div class="achievements-list">
+                        <!-- Achievements will be loaded dynamically -->
                     </div>
                 </div>
             </aside>
 
             <!-- Main Feed -->
             <section class="main-feed">
-                <!-- Create Post -->
-                <div class="create-post">
-                    <textarea class="post-input" placeholder="Share your fitness journey..."></textarea>
+                <!-- Post Creation -->
+                <div class="create-post card">
+                    <div class="post-input-wrapper">
+                        <textarea class="post-input" placeholder="What's on your mind?" rows="3"></textarea>
+                    </div>
                     <div class="post-actions">
                         <div class="post-type">
-                            <button class="type-option active" data-type="post">
-                                <i class="fas fa-pen"></i> Post
+                            <button class="type-option active" data-type="text">
+                                <i class="fas fa-pen"></i> Text
                             </button>
                             <button class="type-option" data-type="workout">
                                 <i class="fas fa-dumbbell"></i> Workout
@@ -104,57 +108,21 @@
                     </div>
                 </div>
 
-                <!-- Feed Posts -->
+                <!-- Feed Filter -->
+                <div class="feed-filter">
+                    <button class="filter-btn active" data-filter="all">All Posts</button>
+                    <button class="filter-btn" data-filter="following">Following</button>
+                    <button class="filter-btn" data-filter="workouts">Workouts</button>
+                    <button class="filter-btn" data-filter="progress">Progress</button>
+                </div>
+
+                <!-- Posts Feed -->
                 <div class="feed-posts">
-                    <!-- Sample Post -->
-                    <article class="feed-post">
-                        <div class="post-header">
-                            <div class="post-author">
-                                <div class="author-avatar">
-                                    <img src="images/user-img.svg" alt="Author">
-                                </div>
-                                <div class="author-info">
-                                    <span class="author-name">Sarah Johnson</span>
-                                    <span class="post-time">2 hours ago</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p>Just crushed a new PR on deadlifts! 💪 Hard work pays off. Remember, consistency is key! 
-                            #FitnessJourney #Strongwoman #MammothFitness</p>
-                        </div>
-                        <div class="post-engagement">
-                            <div class="engagement-actions">
-                                <button class="action-btn">
-                                    <i class="far fa-heart"></i>
-                                    <span>234</span>
-                                </button>
-                                <button class="action-btn">
-                                    <i class="far fa-comment"></i>
-                                    <span>45</span>
-                                </button>
-                                <button class="action-btn">
-                                    <i class="far fa-share-square"></i>
-                                    <span>Share</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="comments-section">
-                            <div class="comment">
-                                <div class="comment-avatar">
-                                    <img src="images/user-img.svg" alt="Commenter">
-                                </div>
-                                <div class="comment-content">
-                                    <div class="comment-author">Mike Smith</div>
-                                    <p>Amazing progress! Keep pushing! 💪</p>
-                                </div>
-                            </div>
-                            <div class="add-comment">
-                                <input type="text" class="comment-input" placeholder="Add a comment...">
-                                <button class="btn-primary">Post</button>
-                            </div>
-                        </div>
-                    </article>
+                    <!-- Posts will be loaded dynamically -->
+                    <div class="loading-indicator">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Loading posts...
+                    </div>
                 </div>
             </section>
         </div>
