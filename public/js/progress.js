@@ -1,190 +1,181 @@
 // Progress tracking frontend implementation
-document.addEventListener('DOMContentLoaded', async () => {
+document.addEventListener('DOMContentLoaded', function() {
     // Cache DOM elements
     const timeframeButtons = document.querySelectorAll('.time-filter button');
-    const weightChart = document.getElementById('weightChart');
-    const bodyFatChart = document.getElementById('bodyFatChart');
-    const measurementsGrid = document.querySelector('.measurements-grid');
-    const exercisesGrid = document.querySelector('.exercises-grid');
+    const weightCard = document.getElementById('weightCard');
+    const bodyFatCard = document.getElementById('bodyFatCard');
     const addMeasurementBtn = document.getElementById('addMeasurementBtn');
-    const addPhotoBtn = document.querySelector('.upload-photo-btn');
+    const measurementModal = document.getElementById('measurementModal');
 
-    // Utility function to fetch data
-    const fetchJSON = async (url) => {
-        const response = await fetch(url);
-        if (!response.ok) throw new Error('Network response was not ok');
-        return response.json();
-    };
+    let weightChart = null;
+    let bodyFatChart = null;
 
-    // Format date for display
-    const formatDate = (dateStr) => {
-        return new Date(dateStr).toLocaleDateString('en-US', {
-            month: 'short',
-            day: 'numeric',
-            year: 'numeric'
-        });
-    };
+    // Toast notification function
+    function showToast(message, isError = false) {
+        Toastify({
+            text: message,
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            style: {
+                background: isError ? "#e74c3c" : "#2ecc71",
+                borderRadius: "8px",
+                fontFamily: "'Poppins', sans-serif",
+            }
+        }).showToast();
+    }
 
-    // Initialize charts with Chart.js
-    const initializeCharts = () => {
-        const chartConfig = {
-            type: 'line',
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: false
-                    },
-                    x: {
-                        reverse: true
+    // Initialize charts
+    function initializeCharts() {
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { 
+                    beginAtZero: false,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toFixed(1);
+                        }
                     }
                 },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            title: (items) => formatDate(items[0].raw.date)
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day',
+                        displayFormats: {
+                            day: 'MMM d'
+                        }
+                    },
+                    reverse: true
+                }
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            let label = context.dataset.label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed.y !== null) {
+                                label += context.parsed.y.toFixed(1);
+                            }
+                            return label;
                         }
                     }
                 }
             }
         };
 
-        // Weight progress chart
-        new Chart(weightChart, {
-            ...chartConfig,
+        // Weight Chart
+        weightChart = new Chart(document.getElementById('weightChart'), {
+            type: 'line',
             data: {
                 datasets: [{
                     label: 'Weight (kg)',
                     borderColor: '#2ecc71',
+                    backgroundColor: 'rgba(46, 204, 113, 0.1)',
                     tension: 0.1,
+                    fill: true,
                     data: []
                 }]
-            }
+            },
+            options: chartOptions
         });
 
-        // Body fat % chart
-        new Chart(bodyFatChart, {
-            ...chartConfig,
+        // Body Fat Chart
+        bodyFatChart = new Chart(document.getElementById('bodyFatChart'), {
+            type: 'line',
             data: {
                 datasets: [{
                     label: 'Body Fat %',
                     borderColor: '#e74c3c',
+                    backgroundColor: 'rgba(231, 76, 60, 0.1)',
                     tension: 0.1,
+                    fill: true,
                     data: []
                 }]
-            }
+            },
+            options: chartOptions
         });
+    }
 
-        // Initialize mini charts for measurements
-        const miniChartElements = document.querySelectorAll('.mini-chart-container canvas');
-        miniChartElements.forEach(canvas => {
-            new Chart(canvas, {
-                ...chartConfig,
-                options: {
-                    ...chartConfig.options,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        x: {
-                            display: false
-                        },
-                        y: {
-                            display: false
-                        }
-                    }
-                }
-            });
-        });
-    };
-
-    // Load and display measurements
-    const loadMeasurements = async () => {
+    // Fetch measurements data
+    async function fetchMeasurements(timeframe = '1M') {
         try {
-            const measurements = await fetchJSON('/api/progress/measurements');
-            if (measurements.length === 0) return;
-
-            const latest = measurements[0];
-            const previous = measurements[1] || latest;
-
-            const measurementTypes = {
-                weight: { unit: 'kg', target: 'weightChart' },
-                body_fat: { unit: '%', target: 'bodyFatChart' },
-                chest: { unit: 'cm', target: 'chestChart' },
-                waist: { unit: 'cm', target: 'waistChart' },
-                biceps: { unit: 'cm', target: 'bicepsChart' },
-                thighs: { unit: 'cm', target: 'thighsChart' }
-            };
-
-            // Update measurement cards and charts
-            for (const [key, { unit, target }] of Object.entries(measurementTypes)) {
-                const currentValue = latest[key];
-                const previousValue = previous[key];
-                const change = currentValue - previousValue;
-
-                // Update measurement card if it exists
-                const card = document.querySelector(`[data-measurement="${key}"]`);
-                if (card) {
-                    card.querySelector('.current').textContent = `${currentValue} ${unit}`;
-                    const changeElement = card.querySelector('.change');
-                    changeElement.textContent = `${change >= 0 ? '+' : ''}${change.toFixed(1)} ${unit}`;
-                    changeElement.className = `change ${change > 0 ? 'positive' : 'negative'}`;
-                }
-
-                // Update chart if it exists
-                const chart = Chart.getChart(target);
-                if (chart) {
-                    chart.data.datasets[0].data = measurements.map(m => ({
-                        x: m.recorded_at,
-                        y: m[key],
-                        date: m.recorded_at
-                    }));
-                    chart.update();
-                }
-            }
-        } catch (error) {
-            console.error('Error loading measurements:', error);
-        }
-    };
-
-    // Load and display exercise progress
-    const loadExerciseProgress = async () => {
-        try {
-            const exercises = await fetchJSON('/api/progress/exercises');
+            const response = await fetch('/api/progress/measurements?' + new URLSearchParams({ timeframe }));
+            if (!response.ok) throw new Error('Failed to fetch measurements');
+            const data = await response.json();
             
-            exercises.forEach(exercise => {
-                const { exercise_name, max_weight, progress } = exercise;
-                const card = document.querySelector(`[data-exercise="${exercise_name}"]`);
-                if (!card) return;
+            if (!Array.isArray(data)) {
+                throw new Error('Invalid data format received');
+            }
 
-                // Update max weight and progress indicators
-                card.querySelector('.max-weight').textContent = `${max_weight} kg`;
-                
-                // Update exercise chart
-                const chart = card.querySelector('canvas');
-                if (chart) {
-                    const chartInstance = Chart.getChart(chart);
-                    chartInstance.data.datasets[0].data = progress.map(p => ({
-                        x: p.occurred_on,
-                        y: p.weight,
-                        date: p.occurred_on
-                    }));
-                    chartInstance.update();
-                }
-            });
+            // Update charts
+            updateCharts(data);
+            
+            // Update latest measurements display
+            if (data.length > 0) {
+                const latest = data[0];
+                updateLatestMeasurements(latest);
+            }
         } catch (error) {
-            console.error('Error loading exercise progress:', error);
+            console.error('Error fetching measurements:', error);
+            showToast('Failed to load progress data', true);
         }
-    };
+    }
 
-    // Handle measurement form submission
-    const handleMeasurementSubmit = async (e) => {
+    function updateCharts(data) {
+        if (!weightChart || !bodyFatChart || !Array.isArray(data)) return;
+
+        // Prepare data for charts
+        const weightData = data
+            .filter(m => m.weight != null)
+            .map(m => ({
+                x: new Date(m.recorded_at),
+                y: parseFloat(m.weight)
+            }));
+
+        const bodyFatData = data
+            .filter(m => m.body_fat != null)
+            .map(m => ({
+                x: new Date(m.recorded_at),
+                y: parseFloat(m.body_fat)
+            }));
+
+        // Update charts
+        weightChart.data.datasets[0].data = weightData;
+        bodyFatChart.data.datasets[0].data = bodyFatData;
+        
+        weightChart.update();
+        bodyFatChart.update();
+    }
+
+    function updateLatestMeasurements(latest) {
+        if (!latest) return;
+        
+        const weightElement = document.getElementById('currentWeight');
+        const bodyFatElement = document.getElementById('currentBodyFat');
+        
+        if (weightElement) {
+            weightElement.textContent = latest.weight ? `${parseFloat(latest.weight).toFixed(1)} kg` : 'No data';
+        }
+        if (bodyFatElement) {
+            bodyFatElement.textContent = latest.body_fat ? `${parseFloat(latest.body_fat).toFixed(1)}%` : 'No data';
+        }
+    }
+
+    // Handle measurement submission
+    async function submitMeasurement(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
+        const data = {
+            weight: parseFloat(formData.get('weight')),
+            body_fat: parseFloat(formData.get('bodyFat'))
+        };
 
         try {
             const response = await fetch('/api/progress/measurements', {
@@ -193,135 +184,47 @@ document.addEventListener('DOMContentLoaded', async () => {
                 body: JSON.stringify(data)
             });
 
-            if (!response.ok) throw new Error('Failed to save measurements');
-
-            // Reload measurements and close modal
-            await loadMeasurements();
-            e.target.closest('.modal').classList.remove('active');
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to save measurements');
+            }
+            
+            // Close modal and refresh data
+            closeModal();
+            fetchMeasurements();
+            
+            // Show success message
+            showToast('Measurements saved successfully!');
         } catch (error) {
             console.error('Error saving measurements:', error);
-            alert('Failed to save measurements. Please try again.');
+            showToast(error.message || 'Failed to save measurements', true);
         }
-    };
+    }
 
-    // Handle photo upload
-    const handlePhotoUpload = async (files) => {
-        const formData = new FormData();
-        [...files].forEach(file => {
-            formData.append('photos', file);
+    // Modal handling
+    function openModal() {
+        measurementModal.classList.remove('hidden');
+    }
+
+    function closeModal() {
+        measurementModal.classList.add('hidden');
+        document.getElementById('measurementForm').reset();
+    }
+
+    // Event listeners
+    timeframeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            timeframeButtons.forEach(b => b.classList.remove('active'));
+            button.classList.add('active');
+            fetchMeasurements(button.textContent);
         });
+    });
 
-        try {
-            const response = await fetch('/api/progress/photos', {
-                method: 'POST',
-                body: formData
-            });
+    addMeasurementBtn?.addEventListener('click', openModal);
+    document.querySelector('.modal-close')?.addEventListener('click', closeModal);
+    document.getElementById('measurementForm')?.addEventListener('submit', submitMeasurement);
 
-            if (!response.ok) throw new Error('Failed to upload photos');
-            
-            // Reload photos section
-            const photos = await fetchJSON('/api/progress/photos');
-            updatePhotosGrid(photos);
-        } catch (error) {
-            console.error('Error uploading photos:', error);
-            alert('Failed to upload photos. Please try again.');
-        }
-    };
-
-    // Update photos grid
-    const updatePhotosGrid = (photos) => {
-        const photosGrid = document.querySelector('.photos-grid');
-        if (!photosGrid || !photos.length) return;
-
-        const photoGroups = groupPhotosByDate(photos);
-        photosGrid.innerHTML = photoGroups.map(group => `
-            <div class="photo-card">
-                <div class="photo-header">${formatDate(group.date)}</div>
-                <div class="photo-grid">
-                    ${group.photos.map(photo => `
-                        <img src="${photo.photo_url}" alt="${photo.category} view" 
-                             class="progress-photo ${photo.category}-view">
-                    `).join('')}
-                </div>
-            </div>
-        `).join('');
-    };
-
-    // Group photos by date
-    const groupPhotosByDate = (photos) => {
-        const groups = {};
-        photos.forEach(photo => {
-            const date = photo.taken_at.split('T')[0];
-            if (!groups[date]) groups[date] = [];
-            groups[date].push(photo);
-        });
-
-        return Object.entries(groups).map(([date, photos]) => ({
-            date,
-            photos
-        })).sort((a, b) => new Date(b.date) - new Date(a.date));
-    };
-
-    // Initialize the page
-    const initialize = async () => {
-        try {
-            // Auth check
-            const userResponse = await fetch('/api/user');
-            if (!userResponse.ok) {
-                window.location.href = '/login.html';
-                return;
-            }
-            const user = await userResponse.json();
-            document.querySelector('.username').textContent = user.username;
-
-            // Initialize UI
-            initializeCharts();
-            await Promise.all([
-                loadMeasurements(),
-                loadExerciseProgress()
-            ]);
-
-            // Add event listeners
-            timeframeButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    timeframeButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
-                    // Update charts based on timeframe
-                    const timeframe = button.textContent;
-                    loadMeasurements(timeframe);
-                    loadExerciseProgress(timeframe);
-                });
-            });
-
-            // Measurement form
-            const measurementForm = document.getElementById('measurementForm');
-            if (measurementForm) {
-                measurementForm.addEventListener('submit', handleMeasurementSubmit);
-            }
-
-            // Photo upload
-            if (addPhotoBtn) {
-                const fileInput = document.createElement('input');
-                fileInput.type = 'file';
-                fileInput.multiple = true;
-                fileInput.accept = 'image/*';
-                fileInput.style.display = 'none';
-                document.body.appendChild(fileInput);
-
-                fileInput.addEventListener('change', (e) => {
-                    if (e.target.files.length > 0) {
-                        handlePhotoUpload(e.target.files);
-                    }
-                });
-
-                addPhotoBtn.addEventListener('click', () => fileInput.click());
-            }
-
-        } catch (error) {
-            console.error('Error initializing progress page:', error);
-        }
-    };
-
-    // Start the application
-    initialize().catch(console.error);
+    // Initialize page
+    initializeCharts();
+    fetchMeasurements();
 });
