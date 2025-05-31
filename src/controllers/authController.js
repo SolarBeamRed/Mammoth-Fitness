@@ -2,32 +2,33 @@ const db = require('../db');
 const bcrypt = require('bcrypt');
 
 exports.signup = async (req, res) => {
-    const { username, email, password } = req.body;
-    const hashedPassword = await bcrypt.hash(password, 10); //Hashing Password
+    try {
+        const { username, email, password } = req.body;
+        const hashedPassword = await bcrypt.hash(password, 10); //Hashing Password
 
-    db.query(
-        'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
-        [username, email, hashedPassword],
-        (err, result) => {
-            if (err) {
-                if (err.code === 'ER_DUP_ENTRY') {
-                    return res.send('Email already exists.');
-                }
-                return res.send('Error creating user.');
-            }
-            return res.send('Signup successful.');
+        await db.query(
+            'INSERT INTO users (username, email, password) VALUES (?, ?, ?)',
+            [username, email, hashedPassword]
+        );
+        return res.send('Signup successful.');
+    } catch (err) {
+        if (err.code === 'ER_DUP_ENTRY') {
+            return res.send('Email already exists.');
         }
-    );
+        return res.send('Error creating user.');
+    }
 }
 
 exports.loginUser = async (req, res) => {
-    const {email, password} = req.body;
+    try {
+        const {email, password} = req.body;
 
-    db.query(
-        'SELECT * FROM users WHERE email = ?', [email],
-        async (err, results) => {
-            if (err) return res.status(500).send("Sorry, server error");
-            if (results.length === 0) return res.status(401).send("Email not found");
+        const results = await db.query(
+            'SELECT * FROM users WHERE email = ?', 
+            [email]
+        );
+        
+        if (results.length === 0) return res.status(401).send("Email not found");
 
             const user = results[0];
             const match = await bcrypt.compare(password, user.password)
@@ -42,7 +43,9 @@ exports.loginUser = async (req, res) => {
                 username: user.username
             };
             return res.send('Login successful');
-    });
+    } catch (err) {
+        return res.status(500).send('Error logging in');
+    }
 };
 
 exports.returnUserToSession = (req, res) => {

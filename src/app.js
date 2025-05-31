@@ -5,10 +5,9 @@ const bcrypt = require('bcrypt');
 const path = require('path');
 const authRoutes = require('./routes/auth');
 const workoutRoutes = require('./routes/workoutRoutes');
-
 const nutritionRoutes = require('./routes/nutritionRoutes');
-
 const progressRoutes = require('./routes/progressRoutes');
+const communityRoutes = require('./routes/communityRoutes');
 
 require('dotenv').config();
 
@@ -39,6 +38,7 @@ app.use(authRoutes);
 app.use('/api', workoutRoutes);
 app.use('/api/nutrition', nutritionRoutes);
 app.use('/api/progress', progressRoutes);
+app.use('/api/community', communityRoutes);
 
 // END OF ROUTES
 

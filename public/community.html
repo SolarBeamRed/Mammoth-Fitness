@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community - Mammoth Fitness</title>
+    <link rel="icon" href="images/dumbbell-solid.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/community.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="main-header">
+        <div class="header-content">
+            <div class="branding">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="brand-icon">
+                <h1 class="logo">Mammoth<span>Fitness</span></h1>
+            </div>
+            
+            <nav class="main-nav">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="homepage.html"><i class="fas fa-home"></i>Dashboard</a></li>
+                    <li class="nav-item"><a href="workouts.html"><i class="fas fa-dumbbell"></i>Workouts</a></li>
+                    <li class="nav-item"><a href="nutrition.html"><i class="fas fa-apple-alt"></i>Nutrition</a></li>
+                    <li class="nav-item"><a href="progress.html"><i class="fas fa-chart-line"></i>Progress</a></li>
+                    <li class="nav-item"><a href="community.html" class="active"><i class="fas fa-users"></i>Community</a></li>
+                </ul>
+            </nav>
+
+            <div class="user-panel">
+                <div class="user-greeting">
+                    <span class="welcome">Welcome,</span>
+                    <span class="username">@Strongman123</span>
+                </div>
+                <div class="user-menu">
+                    <button class="avatar">
+                        <img src="images/user-img.svg" alt="User Avatar">
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="profile.html"><i class="fas fa-user-cog"></i>Profile Settings</a>
+                        <a href="#logout"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="content-wrapper">
+        <div class="community-content">
+            <!-- Left Sidebar - User Profile -->
+            <aside class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar">
+                        <img src="images/user-img.svg" alt="User Profile">
+                    </div>
+                    <div class="profile-info">
+                        <h2>John Doe</h2>
+                        <p class="bio">🏋️‍♂️ Fitness enthusiast | 💪 Strength training</p>
+                    </div>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <span class="stat-value">248</span>
+                        <span class="stat-label">Posts</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">1.2k</span>
+                        <span class="stat-label">Followers</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value">890</span>
+                        <span class="stat-label">Following</span>
+                    </div>
+                </div>
+                <div class="achievements">
+                    <h3>Achievements</h3>
+                    <div class="achievement-badges">
+                        <!-- Add achievement badges here -->
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Feed -->
+            <section class="main-feed">
+                <!-- Create Post -->
+                <div class="create-post">
+                    <textarea class="post-input" placeholder="Share your fitness journey..."></textarea>
+                    <div class="post-actions">
+                        <div class="post-type">
+                            <button class="type-option active" data-type="post">
+                                <i class="fas fa-pen"></i> Post
+                            </button>
+                            <button class="type-option" data-type="workout">
+                                <i class="fas fa-dumbbell"></i> Workout
+                            </button>
+                            <button class="type-option" data-type="progress">
+                                <i class="fas fa-chart-line"></i> Progress
+                            </button>
+                        </div>
+                        <button class="btn-primary">Share</button>
+                    </div>
+                </div>
+
+                <!-- Feed Posts -->
+                <div class="feed-posts">
+                    <!-- Sample Post -->
+                    <article class="feed-post">
+                        <div class="post-header">
+                            <div class="post-author">
+                                <div class="author-avatar">
+                                    <img src="images/user-img.svg" alt="Author">
+                                </div>
+                                <div class="author-info">
+                                    <span class="author-name">Sarah Johnson</span>
+                                    <span class="post-time">2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="post-content">
+                            <p>Just crushed a new PR on deadlifts! 💪 Hard work pays off. Remember, consistency is key! 
+                            #FitnessJourney #Strongwoman #MammothFitness</p>
+                        </div>
+                        <div class="post-engagement">
+                            <div class="engagement-actions">
+                                <button class="action-btn">
+                                    <i class="far fa-heart"></i>
+                                    <span>234</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="far fa-comment"></i>
+                                    <span>45</span>
+                                </button>
+                                <button class="action-btn">
+                                    <i class="far fa-share-square"></i>
+                                    <span>Share</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="comments-section">
+                            <div class="comment">
+                                <div class="comment-avatar">
+                                    <img src="images/user-img.svg" alt="Commenter">
+                                </div>
+                                <div class="comment-content">
+                                    <div class="comment-author">Mike Smith</div>
+                                    <p>Amazing progress! Keep pushing! 💪</p>
+                                </div>
+                            </div>
+                            <div class="add-comment">
+                                <input type="text" class="comment-input" placeholder="Add a comment...">
+                                <button class="btn-primary">Post</button>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <img src="images/dumbbell-solid.svg" alt="Mammoth Icon" class="footer-icon">
+                <h2 class="logo">Mammoth<span>Fitness</span></h2>
+                <p class="tagline">Transform Your Body, Elevate Your Life</p>
+            </div>
+            <nav class="footer-nav">
+                <div class="nav-column">
+                    <h4>Features</h4>
+                    <a href="workouts.html">Workouts</a>
+                    <a href="nutrition.html">Nutrition</a>
+                    <a href="progress.html">Progress</a>
+                    <a href="community.html">Community</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Support</h4>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <div class="nav-column">
+                    <h4>Legal</h4>
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#cookies">Cookie Policy</a>
+                </div>
+            </nav>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 MammothFitness. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/community.js"></script>
+</body>
+</html>
