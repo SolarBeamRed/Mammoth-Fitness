@@ -1,35 +1,25 @@
-const jwt = require('jsonwebtoken');
-const db = require('../db');
-
 const auth = async (req, res, next) => {
     try {
-        // Get token from header
-        const token = req.header('Authorization')?.replace('Bearer ', '');
-        
-        if (!token) {
-            return res.status(401).json({ message: 'No authentication token, authorization denied' });
+        // Check if user is logged in via session
+        if (!req.session.user) {
+            // If it's an API request, return 401
+            if (req.path.startsWith('/api/')) {
+                return res.status(401).json({ message: 'Please log in to continue' });
+            }
+            // For non-API requests, redirect to login
+            return res.redirect('/login.html');
         }
 
-        // Verify token
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        
-        // Get user from database
-        const [user] = await db.query(
-            'SELECT id, username, email FROM users WHERE id = ?',
-            [decoded.userId]
-        );
-
-        if (!user) {
-            throw new Error();
-        }
-
-        // Add user to request object
-        req.user = user;
-        req.token = token;
+        // Add user from session to request object
+        req.user = req.session.user;
         
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Token is not valid' });
+        console.error('Auth error:', error);
+        if (req.path.startsWith('/api/')) {
+            return res.status(401).json({ message: 'Authentication error' });
+        }
+        res.redirect('/login.html');
     }
 };
 

@@ -1,13 +1,20 @@
 // Community Page JavaScript
 document.addEventListener('DOMContentLoaded', async () => {
     try {
+        // First check if user is authenticated
+        const authCheck = await fetch('/api/user');
+        if (!authCheck.ok) {
+            window.location.href = '/login.html';
+            return;
+        }
+
         await loadUserProfile();
         initializePostCreation();
         initializePostInteractions();
         initializeFeedFilters();
         await loadPosts();
     } catch (error) {
-        showNotification('Error initializing page', 'error');
+        window.location.href = '/login.html';
     }
 });
 
