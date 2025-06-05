@@ -1,6 +1,6 @@
 -- Community Tables for MySQL
 
--- Posts Table
+-- Posts Table gets created only if posts table does not exist
 CREATE TABLE IF NOT EXISTS posts (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS posts (
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB;
 
--- Post Likes Table
+-- Post Likes Table, created only if likes table does not exist
 CREATE TABLE IF NOT EXISTS likes (
     post_id INT,
     user_id INT,
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS likes (
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB;
 
--- Comments Table
+-- Comments Table gets created only if comments table does not exist
 CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS comments (
     FOREIGN KEY (user_id) REFERENCES users(id)
 ) ENGINE=InnoDB;
 
--- User Followers Table
+-- User Followers Table gets created only if follows table does not exist
 CREATE TABLE IF NOT EXISTS follows (
     follower_id INT,
     following_id INT,
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS follows (
     FOREIGN KEY (following_id) REFERENCES users(id)
 ) ENGINE=InnoDB;
 
--- Post Media Table
+-- Post Media Table gets created only if post_media table does not exist
 CREATE TABLE IF NOT EXISTS post_media (
     id INT AUTO_INCREMENT PRIMARY KEY,
     post_id INT,
@@ -53,7 +53,7 @@ CREATE TABLE IF NOT EXISTS post_media (
     FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- User Achievements Table
+-- User Achievements Table gets created only if achievements table does not exist
 CREATE TABLE IF NOT EXISTS achievements (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS achievements (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
--- User Achievement Progress Table
+-- User Achievement Progress Table gets created only if user_achievements table does not exist
 CREATE TABLE IF NOT EXISTS user_achievements (
     user_id INT,
     achievement_id INT,

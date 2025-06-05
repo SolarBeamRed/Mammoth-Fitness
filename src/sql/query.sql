@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS exercises;
 DROP TABLE IF EXISTS plans;
 DROP TABLE IF EXISTS users;
 
+-- user table
 CREATE TABLE users (
   id          INT AUTO_INCREMENT PRIMARY KEY,
   username    VARCHAR(255) NOT NULL,
@@ -14,6 +15,7 @@ CREATE TABLE users (
   password    VARCHAR(255) NOT NULL
 );
 
+-- default plans table
 CREATE TABLE plans (
   id          INT AUTO_INCREMENT PRIMARY KEY,
   name        VARCHAR(100) NOT NULL,
@@ -22,6 +24,7 @@ CREATE TABLE plans (
   FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL
 );
 
+-- exercises table
 CREATE TABLE exercises (
   id           INT AUTO_INCREMENT PRIMARY KEY,
   name         VARCHAR(100) NOT NULL,
@@ -29,6 +32,7 @@ CREATE TABLE exercises (
   instructions TEXT
 );
 
+-- user_plan table
 CREATE TABLE user_plan (
   user_id    INT NOT NULL,
   plan_id    INT NOT NULL,
@@ -38,6 +42,7 @@ CREATE TABLE user_plan (
   FOREIGN KEY (plan_id) REFERENCES plans(id)       ON DELETE CASCADE
 );
 
+-- plan_exercises table
 CREATE TABLE plan_exercises (
   id            INT AUTO_INCREMENT PRIMARY KEY,
   plan_id       INT NOT NULL,
@@ -48,6 +53,7 @@ CREATE TABLE plan_exercises (
   FOREIGN KEY (exercise_id) REFERENCES exercises(id) ON DELETE CASCADE
 );
 
+-- workout_history table
 CREATE TABLE workout_history (
   id           INT AUTO_INCREMENT PRIMARY KEY,
   user_id      INT NOT NULL,

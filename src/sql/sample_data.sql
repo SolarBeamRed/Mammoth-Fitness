@@ -27,6 +27,7 @@ INSERT IGNORE INTO exercises (id, name, image_url, instructions) VALUES
 (2, 'Squat', NULL, 'Stand with bar on shoulders, squat down, stand up'),
 (3, 'Deadlift', NULL, 'Stand with bar at feet, lift bar up, lower back down');
 
+-- Sample user exercise progress
 INSERT INTO exercise_progress (user_id, exercise_id, weight, reps, sets, recorded_at) VALUES
 (1, 1, 80.0, 8, 3, '2025-05-01'),
 (1, 1, 82.5, 8, 3, '2025-05-08'),
