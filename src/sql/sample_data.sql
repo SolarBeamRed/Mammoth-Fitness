@@ -40,3 +40,9 @@ INSERT INTO exercise_progress (user_id, exercise_id, weight, reps, sets, recorde
 (1, 3, 125.0, 6, 3, '2025-05-08'),
 (1, 3, 130.0, 6, 3, '2025-05-15'),
 (1, 3, 135.0, 6, 3, '2025-05-22');
+
+
+I need you to completely analyse the code base each and every file and I need you to generate .md files for each and every functionality .
+Generate frontend_guide , backend guide , database , API , and entire applications details etcc . 
+
+All these .md files should be long and descriptive (can have code snippets to explain their respective functionalites / database schemas) .
